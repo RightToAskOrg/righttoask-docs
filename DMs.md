@@ -22,4 +22,7 @@ Investigate non-permanent secure storage).*
 
 *Question: Maybe MPs should only accept DMs from verified accounts?*
 
-*Question: Perhaps we should just use PGP mail?*
+*Question: Perhaps we should just use PGP?*
+
+|:----------------|---------------:|
+| [Back: Security and Privacy](https://righttoaskorg.github.io/righttoask-docs/SecurityAndPrivacy)| |[Next: Further Questions](https://righttoaskorg.github.io/righttoask-docs/DiscussionAndFurtherQuestions) 

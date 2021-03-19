@@ -120,6 +120,10 @@ want. (For example, everyone says they are interested in the economy,
 but this is not very informative for understanding what policies they
 support or questions they want to ask.)
 
+|:----------------|---------------:|
+|[Back: Possible Later Features](https://righttoaskorg.github.io/righttoask-docs/DMs) | | [Next: Prototype](https://righttoaskorg.github.io/righttoask-docs/Prototype)|
+
+
 [^1]: Many students also contributed to this design, including: Ishan
     Goyal, Chuanyuan Liu, Lilli McCann, Eleanor McMurtry, Hanna Navissi
     and Miguel Wood

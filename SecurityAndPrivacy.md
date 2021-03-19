@@ -98,3 +98,6 @@ hard. Maybe have a new user badge (because that might be a nice person
 to engage with, but it might also be a sign of being not actually a real
 person).
 
+
+|:----------------|---------------:|
+| [Back: Screens and Usage](https://righttoaskorg.github.io/righttoask-docs/ScreensAndUsage)| |[Next: Possible Later Features](https://righttoaskorg.github.io/righttoask-docs/DMs)
