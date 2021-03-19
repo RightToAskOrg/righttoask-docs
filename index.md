@@ -114,7 +114,7 @@ interested.
 Citizens are incentivised to participate by the satisfaction of having
 their voices heard.
 
-----------------------------------------------------------------------
+*****
 
 [^1]: The term "citizen" is used here to emphasise the active
     participation in a democratic process, though users may of course be
