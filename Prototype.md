@@ -21,3 +21,5 @@ RightToAsk should now load - you will be prompted to register.
 In the main question screen, you can flick downwards to see a list of current questions, which you can upvote or downvote.  You can also ask and tag questions, or sort, search and filter them.
 
 
+|:----------------|---------------:|
+|[Back: Further Questions](https://righttoaskorg.github.io/righttoask-docs/DiscussionAndFurtherQuestions)  |    |

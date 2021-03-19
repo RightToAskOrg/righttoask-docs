@@ -3,8 +3,8 @@
 Parliament is meant to represent the people, but it does not always work
 as well as it should. Citizens want more input into the functions of
 government between elections; parliamentarians, conversely, often
-struggle to understand what their constituents want and how to represent
-them.
+struggle with a deluge of messages that don't give a clear picture of 
+what their constituents want or how to represent them.
 
 *RightToAsk* lets citizens[^1] suggest and vote on questions, which
 could be:
@@ -114,7 +114,8 @@ interested.
 Citizens are incentivised to participate by the satisfaction of having
 their voices heard.
 
-[Next: Features](https://righttoaskorg.github.io/righttoask-docs/Features)
+|:----------------|---------------:|
+| [Next: Features](https://righttoaskorg.github.io/righttoask-docs/Features)| |
 
 *****
 
