@@ -49,3 +49,6 @@ inquiry take you to that committee/inquiry homepage? Probably. Perhaps
 within the app so you can easily go back.*
 
 Format and function details are described in the spec.
+
+|:----------------|---------------:|
+| [Back: Screens and Usage](https://github.com/RightToAskOrg/righttoask-docs/ScreensAndUsage) | [Next: Security and Privacy](https://github.com/RightToAskOrg/righttoask-docs/SecurityAndPrivacy) | |

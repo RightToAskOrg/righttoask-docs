@@ -114,16 +114,7 @@ interested.
 Citizens are incentivised to participate by the satisfaction of having
 their voices heard.
 
-[Next]("https://righttoaskorg.github.io/righttoask-docs/Features")
-
-<button name="button" href="https://righttoaskorg.github.io/righttoask-docs/Features">Next: Features</button>
-
-<form action="/Features">
-    <input type="submit" value="Next: Features"/>
-</form>
-
-<a href="https://righttoaskorg.github.io/righttoask-docs/Features" style="appearance: button">Next: Features</a>
-
+[Next: Features](https://righttoaskorg.github.io/righttoask-docs/Features)
 
 *****
 
