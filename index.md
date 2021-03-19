@@ -112,11 +112,8 @@ interested.
 Citizens are incentivised to participate by the satisfaction of having
 their voices heard.
 
-|:----------------|---------------:|
-| |[Next: Features](https://righttoaskorg.github.io/righttoask-docs/Features)|
 
-
-<div style="text-align: right"> [Next: Features](https://righttoaskorg.github.io/righttoask-docs/Features) </div>
+<div style="text-align: right"> <a href="https://righttoaskorg.github.io/righttoask-docs/Features">Next: Features</a> </div>
 
 *****
 
