@@ -115,7 +115,7 @@ Citizens are incentivised to participate by the satisfaction of having
 their voices heard.
 
 
-<button name="button" onclick="Features">Next: Features</button>
+<button name="button" onclick="https://righttoaskorg.github.io/righttoask-docs/Features">Next: Features</button>
 
 *****
 
