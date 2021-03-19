@@ -2,7 +2,8 @@
 
 **Be aware that this is a prototype for UI testing, not a complete solution.  Many things are not implemented yet, and none of the security or privacy features are present.**
 
-If you'd like to try it out and tell us what you think, start by downloading the Expo app from either the [Playstore](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en_AU&gl=US) or the [Appstore ](https://apps.apple.com/au/app/expo-client) and setting up an expo account if required.
+The prototype only runs on Android devices. 
+If you'd like to try it out and tell us what you think, start by downloading the Expo app from the [Playstore](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en_AU&gl=US).
 
 ### Direct download with phone
 In your phone's web browser, go to the [righttoask-prototype project](https://expo.io/@vteague/projects/righttoask-prototype) and click on Open Project Using Expo.
