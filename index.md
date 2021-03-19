@@ -115,6 +115,9 @@ their voices heard.
 |:----------------|---------------:|
 | |[Next: Features](https://righttoaskorg.github.io/righttoask-docs/Features)|
 
+
+<div style="text-align: right"> [Next: Features](https://righttoaskorg.github.io/righttoask-docs/Features) </div>
+
 *****
 
 [^1]: The term "citizen" is used here to emphasise the active
