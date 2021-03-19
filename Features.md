@@ -259,4 +259,4 @@ federal representatives.
     to explain the tradeoffs?*
 
 |:----------------|---------------:|
-|[Back: Overview](https://github.com/RightToAskOrg/righttoask-docs/) | [Next: Screens and Usage](https://github.com/RightToAskOrg/righttoask-docs/ScreensAndUsage)|
+|[Back: Overview](https://righttoaskorg.github.io/righttoask-docs/) | [Next: Screens and Usage](https://righttoaskorg.github.io/righttoask-docs/ScreensAndUsage)|

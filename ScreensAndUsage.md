@@ -51,4 +51,4 @@ within the app so you can easily go back.*
 Format and function details are described in the spec.
 
 |:----------------|---------------:|
-| [Back: Screens and Usage](https://github.com/RightToAskOrg/righttoask-docs/ScreensAndUsage) | [Next: Security and Privacy](https://github.com/RightToAskOrg/righttoask-docs/SecurityAndPrivacy) | |
+|[Back: Features](https://righttoaskorg.github.io/righttoask-docs/Features) | [Next: Security and Privacy](https://righttoaskorg.github.io/righttoask-docs/SecurityAndPrivacy)|
