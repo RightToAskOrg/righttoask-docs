@@ -114,6 +114,9 @@ interested.
 Citizens are incentivised to participate by the satisfaction of having
 their voices heard.
 
+
+<button name="button" onclick="Features">Next: Features</button>
+
 *****
 
 [^1]: The term "citizen" is used here to emphasise the active
