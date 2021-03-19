@@ -11,7 +11,7 @@ questions they are interested in.
 
 ## What we ask people to share
 
-Optionally, people may state the electorate they live in. [^6] This
+Optionally, people may state the electorate they live in. [^1] This
 allows MPs (and everyone else) to filter based on their own electorate.
 
 I see no reason to ask for demographic information, except possibly to
@@ -100,4 +100,11 @@ person).
 
 
 |:----------------|---------------:|
-| [Back: Screens and Usage](https://righttoaskorg.github.io/righttoask-docs/ScreensAndUsage)| |[Next: Possible Later Features](https://righttoaskorg.github.io/righttoask-docs/DMs)
+| [Back: Screens and Usage](https://righttoaskorg.github.io/righttoask-docs/ScreensAndUsage)| |[Next: Direct Messages](https://righttoaskorg.github.io/righttoask-docs/DMs)
+
+
+[^1]: In Victoria, all state electorates are subsets of federal
+    electorates, but in other Australian states this is not guaranteed.
+    This matters for privacy because there may be only a few people in
+    the intersection of two (state and federal) electorates, so tallying
+    of those subsets may reveal individual votes.

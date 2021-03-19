@@ -72,8 +72,7 @@ ask it in a confidential parliamentary setting
 answer it privately by DM
 
 :   generally for private questions only of interest to the individual
-    who asked (see Section [5](#sec:DMs){reference-type="ref"
-    reference="sec:DMs"});
+    who asked (see [Direct Messages](https://righttoaskorg.github.io/righttoask-docs/DMs);
 
 Reject / disavow / re-tag the question
 
@@ -144,8 +143,7 @@ likely to have influence.
     questions that are not relevant to their responsibilities, but we
     also don't want to make it too easy to hide a valid and popular
     question. Maybe direct it to someone else? Maybe just let it expire?
-    Maybe write a short message explaining why you're not answering?
-    Perhaps the implementation of this is the same as (3).*
+    Maybe write a short message explaining why you're not answering?*
 
 ## Accounts and roles
 
@@ -154,9 +152,7 @@ citizens---they can pose and vote on questions, but not answer them.
 However, the details of their account structure are more like an MPs, in
 the sense that we seek some evidence that they actually represent their
 claimed organisation, and allow multiple individuals to speak on their
-behalf. See
-Section [4.2](#subsec:identityAndAccountVerif){reference-type="ref"
-reference="subsec:identityAndAccountVerif"} for more details.
+behalf. See [Security and Privacy](https://righttoaskorg.github.io/righttoask-docs/SecurityAndPrivacy) for more details.
 
 ## Sorting, searching and following features
 

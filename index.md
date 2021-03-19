@@ -1,9 +1,7 @@
-# Right To Ask Overview
-
 Parliament is meant to represent the people, but it does not always work
 as well as it should. Citizens want more input into the functions of
 government between elections; parliamentarians, conversely, often
-struggle with a deluge of messages that don't give a clear picture of 
+struggle with a deluge of messages that do not give a clear picture of 
 what their constituents want or how to represent them.
 
 *RightToAsk* lets citizens[^1] suggest and vote on questions, which
@@ -105,7 +103,7 @@ considered or copy-pasted, and take time to assess.
 We avoid AI and the consequent risks of algorithmic bias. Citizens do
 the work of aggregating opinions and assessing others' suggestions, thus
 providing a more trustworthy way of directing the most important
-questions to MPs. (Although, of course, people can be biased too.)
+questions to MPs (although, of course, people can be biased too).
 
 RightToAsk also conveys what fraction of people saw the question and
 *did not* upvote it, thus informing the MP if many people were *not*
@@ -115,7 +113,7 @@ Citizens are incentivised to participate by the satisfaction of having
 their voices heard.
 
 |:----------------|---------------:|
-| [Next: Features](https://righttoaskorg.github.io/righttoask-docs/Features)| |
+| |[Next: Features](https://righttoaskorg.github.io/righttoask-docs/Features)|
 
 *****
 
