@@ -118,6 +118,12 @@ their voices heard.
 
 <button name="button" href="https://righttoaskorg.github.io/righttoask-docs/Features">Next: Features</button>
 
+<form action="/Features">
+    <input type="submit" value="Next: Features"/>
+</form>
+
+
+
 *****
 
 [^1]: The term "citizen" is used here to emphasise the active
