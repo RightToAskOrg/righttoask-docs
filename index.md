@@ -6,7 +6,7 @@ government between elections; parliamentarians, conversely, often
 struggle to understand what their constituents want and how to represent
 them.
 
-*RightToAsk* lets citizens[^2] suggest and vote on questions, which
+*RightToAsk* lets citizens[^1] suggest and vote on questions, which
 could be:
 
 -   *directed to* an MP to ask for an answer, or
@@ -69,7 +69,7 @@ MPs
     have flicked past it. Conversely, a new question that had received
     100% upvotes might deserve attention even if the total number of
     votes was small. The MP may answer the question directly or raise it
-    in Parliament.[^3]
+    in Parliament.[^2]
 
 Journalists
 
@@ -114,25 +114,14 @@ interested.
 Citizens are incentivised to participate by the satisfaction of having
 their voices heard.
 
-[^1]: Many students also contributed to this design, including: Ishan
-    Goyal, Chuanyuan Liu, Lilli McCann, Eleanor McMurtry, Hanna Navissi
-    and Miguel Wood
+----------------------------------------------------------------------
 
-[^2]: The term "citizen" is used here to emphasise the active
+[^1]: The term "citizen" is used here to emphasise the active
     participation in a democratic process, though users may of course be
     permanent residents, under-18s or other non-Australian-citizens. The
     term "MP" includes senators and members of state legislative bodies.
 
-[^3]: The Victorian Parliament has recently introduced a special session
+[^2]: The Victorian Parliament has recently introduced a special session
     for constituent questions:
     <https://www.parliament.vic.gov.au/about/news/2458-constituency-questions-introduced>
 
-[^4]: Perhaps restricted to .gov.au sites?
-
-[^5]: Filter is not functionally different from search
-
-[^6]: In Victoria, all state electorates are subsets of federal
-    electorates, but in other Australian states this is not guaranteed.
-    This matters for privacy because there may be only a few people in
-    the intersection of two (state and federal) electorates, so tallying
-    of those subsets may reveal individual votes.
