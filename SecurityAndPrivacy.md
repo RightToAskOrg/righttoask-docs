@@ -11,11 +11,11 @@ questions they are interested in.
 
 ## What we ask people to share
 
-Optionally, people may state the electorate they live in. [^1] This
+Optionally, people may state the electorate they live in.[^1] This
 allows MPs (and everyone else) to filter based on their own electorate.
 
 I see no reason to ask for demographic information, except possibly to
-understand who is $<18$ and who isn't.
+understand who is under 18.
 
 -   *Question: What is the minimum group size to allow for aggregation,
     in order to be fairly confident of not violating individual privacy?
@@ -25,7 +25,7 @@ understand who is $<18$ and who isn't.
 -   *Question: Are there extra privacy rules for participants under 18?
     Certainly in the EU there are - not sure about Aus.*
 
--   *Question: How important is *participation privacy* as well as the privacy of up or down
+-   *Question: How important is participation privacy as well as the privacy of up or down
 votes? That is, it should not be possible to detect which users have
 rated which questions.*
 
@@ -44,7 +44,7 @@ person registering has access to the official email account.
 
 -   *Question: How should RightToAsk account access be organised for
     staffers? Do different staff take responsibility for different
-    aspects,*e.g.* some for committee questions and others for
+    aspects, e.g. some for committee questions and others for
     constituent matters?*
 
 ### Citizens
@@ -68,12 +68,12 @@ registration. Perhaps when people sign up they could apply for such a
 thing if their MP joins in? This would cost a postage stamp of course.*
 
 *Question: Should you be allowed to use a pseudonym? My feeling is yes, but know
-that you're easily re-identified.
+that you're easily re-identified.*
 
 ### Key management
 
 *Question: Could we implement a signal-like way to check your friend's key? And/or
-integrate with other systems such as Signal, Apple, Keybase, etc.*
+integrate with other systems such as Signal, Apple, Keybase, etc?*
 
 *Question: We could optionally allow people to secret-share their private key with
 friends (or authorities?) for recovery. Is that a helpful feature or too hard to do in a
@@ -91,12 +91,6 @@ emails, but with the domain they claimed). It's not perfect, and it
 doesn't stop you registering
 "mydodgyfakeoftheaustralianconservationfoundation.com" but at least it
 gives other users a chance to check their website.
-
-Detecting completely fake accounts, and distinguishing them from a
-signup drive from a legitimate source, is really important but very
-hard. Maybe have a new user badge (because that might be a nice person
-to engage with, but it might also be a sign of being not actually a real
-person).
 
 
 |:----------------|---------------:|

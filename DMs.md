@@ -8,7 +8,7 @@ them; a citizen can reply (by DM) to any DM. Of course, these defaults
 can be edited to allow more or less receptive DM behaviour.
 
 *Question: Do we have to do anything as complicated as Signal-style
-ratcheting, or can we simply use one-pass ECDH? 
+ratcheting, or can we simply use one-pass ECDH?* 
 
 *Question: Maybe MPs should only accept DMs from verified accounts?*
 
