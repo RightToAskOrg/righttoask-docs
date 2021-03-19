@@ -116,7 +116,7 @@ their voices heard.
 
 [Next]("https://righttoaskorg.github.io/righttoask-docs/Features")
 
-<button name="button" onclick="https://righttoaskorg.github.io/righttoask-docs/Features">Next: Features</button>
+<button name="button" href="https://righttoaskorg.github.io/righttoask-docs/Features">Next: Features</button>
 
 *****
 
