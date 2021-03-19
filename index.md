@@ -122,6 +122,7 @@ their voices heard.
     <input type="submit" value="Next: Features"/>
 </form>
 
+<a href="https://righttoaskorg.github.io/righttoask-docs/Features" style="appearance: button">Next: Features</a>
 
 
 *****
