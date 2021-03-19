@@ -18,7 +18,7 @@ Tag a question with a topic or keyword
 
 Add an explanation or background link
 
-:   e.g. to a bill[^4]
+:   e.g. to a bill or explanatory memorandum
 
 Upvote or downvote/flick a question
 
@@ -38,8 +38,7 @@ Sort questions
 
 Filter questions
 
-:   by electorate, answer status[^5]
-
+:   by electorate, answer status
 Follow another citizen
 
 :   who may or may not be an MP.
