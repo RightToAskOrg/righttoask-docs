@@ -30,7 +30,7 @@ Attach a link to Hansard
 
 Search questions
 
-:   by tag, committee, or MP
+:   by key word
 
 Sort questions
 
@@ -38,7 +38,9 @@ Sort questions
 
 Filter questions
 
-:   by electorate, answer status
+:   by electorate, answer status, tag, committee, or MP
+
+
 Follow another citizen
 
 :   who may or may not be an MP.
@@ -71,7 +73,7 @@ ask it in a confidential parliamentary setting
 answer it privately by DM
 
 :   generally for private questions only of interest to the individual
-    who asked (see [Direct Messages](https://righttoaskorg.github.io/righttoask-docs/DMs);
+    who asked (see [Direct Messages](https://righttoaskorg.github.io/righttoask-docs/DMs));
 
 Reject / disavow / re-tag the question
 
