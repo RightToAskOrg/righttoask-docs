@@ -27,11 +27,11 @@ This receives an immediate acknowledgement from the server, of the form:
 
 - SSig = signature<sub>server</sub>(h(D, CSig))
 
-where h indicates a cryptographic hash function (e.g. SHA256), for use in the BB proofs.  This is a promise from the server that H(D), CSig will be included on the BB.
+where h indicates a cryptographic hash function (e.g. SHA256), for use in the BB proofs.  This is a promise from the server that D, CSig  (or, more precisely, h(D,CSig)) will be included on the BB.
 
 The role of the metadata M is to allow the client to upload extraneous info to the server without that info being posted on the BB.
 
-The exact requirements for the data obviously depend on the specific kind of message. For registration, data would include a name, public key and (optionally) electorate.  For voting, data would include vote ciphertexts with sufficient extra data to identify which questions they were answering.  For question-asking, the data is quite complex and would include the text of the question, the ID of the person asking, any tags or links, etc.  We will also add some more functionality for answering quesions, marking them as answered, re-tagging them for other MPs, etc...
+The exact requirements for the data obviously depend on the specific kind of message. For registration, data would include a name, public key and (optionally) electorate.  For voting, data would include vote ciphertexts with sufficient extra data to identify which questions they were answering.  For question-asking, the data is quite complex and would include the text of the question, the ID of the person asking, any tags or links, etc.  We will also add some more functionality for answering questions, marking them as answered, re-tagging them for other MPs, etc...
 
 ## Verification functions
 There are three different things a client may wish to verify (though the first two are very similar):
