@@ -7,7 +7,7 @@ We envisage a bulletin board (BB) which is rebuilt on a relatively slow schedule
 - a proof of inclusion of any data posted in the previous epoch, and
 - a history proof (subtree proof) of inclusion of the prior epoch's root hash.
 
-See these resources for [a good pictorial introduction to Merkle Trees and inclusion proofs](), [Google's Trillian implementation](https://github.com/google/trillian) and [Crosby and Wallach's paper describing the original ideas](https://www.usenix.org/legacy/event/sec09/tech/full_papers/crosby.pdf).  
+See these resources for [a good pictorial introduction to Merkle Trees and inclusion proofs](https://sites.google.com/site/certificatetransparency/log-proofs-work), [Google's Trillian implementation](https://github.com/google/trillian) and [Crosby and Wallach's paper describing the original ideas](https://www.usenix.org/legacy/event/sec09/tech/full_papers/crosby.pdf).  
 
 We assume the interfaces for inclusion and history proofs defined by Eleanor McMurtry [here](https://eleanorve.net/google-merkle-rs/google_merkle/struct.MerkleTree.html).  For now, call them inclusionProof and historyProof.  These proofs work only on hashes of data, not on the posted data directly.
 
