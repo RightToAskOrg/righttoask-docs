@@ -11,7 +11,7 @@ See these resources for [a good pictorial introduction to Merkle Trees and inclu
 
 We assume the interfaces for inclusion and history proofs defined by Eleanor McMurtry [here](https://eleanorve.net/google-merkle-rs/google_merkle/struct.MerkleTree.html).  For now, call them inclusionProof and historyProof.  These proofs work only on hashes of data, not on the posted data directly.
 
-## Main post functions
+## Post functions
 
 The main functionality of the rightToAsk client-server interaction is very similar to that of the prototype, except that we also add verification of the BB state.  This means that each upload is divided into two parts: data to be uploaded to the BB, and other optional metadata.  The BB data also needs the client's signature.  So a typical post, e.g. for registration, question-posting, or voting, has this structure:
 
@@ -33,11 +33,53 @@ The role of the metadata M is to allow the client to upload extraneous info to t
 
 The exact requirements for the data obviously depend on the specific kind of message. For registration, data would include a name, public key and (optionally) electorate.  For voting, data would include vote ciphertexts with sufficient extra data to identify which questions they were answering.  For question-asking, the data is quite complex and would include the text of the question, the ID of the person asking, any tags or links, etc.  We will also add some more functionality for answering questions, marking them as answered, re-tagging them for other MPs, etc...
 
+## Query functions
+
+Query functions ask for current updates, since the end of the last epoch.  We assume that the client has downloaded (and verified inclusion of) the committed tallies for the end of the last epoch.  Query functions give intermediate updates.
+
+**Query questions**
+
+No input.
+
+The server returns:
+
+- Q = list of questions uploaded so far in this epoch
+- SSig = signature<sub>server</sub>(h(Q))
+
+(**Note: this isn't quite right because we really only need the ones that are new since the last time we queried.  I hope there are automatic/standard ways to deal with this.**)
+
+**Query key**
+Client sends:
+
+- ID
+
+Server returns:
+
+- ID
+- PK<sub>ID</sub> = the public key associated with that ID
+- Ssig = signature<sub>server</sub>(h(ID,PK<sub>ID</sub>))
+
+**Query tallies**
+
+No input.
+
+The server returns:
+
+- T = current tally updates for everything that has been decrypted in this epoch so far
+- SSig = signature<sub>server</sub>(h(T))
+
+(**Question: Can we get Trillian to deal elegantly with successive updates through the epoch? i.e. to make it obvious/easy to check that something you were told is subsequently included? Need to think about the data structure a little.  It probably works out fine if we simply make a Trillian leaf out of each batch decryption - clients can then verify inclusion later, though they obviously can't verify if something was withheld.**)
+
+(**Question: should a query answer include only the updates since the last epoch?  Or should it include the state as at the last BB update too?  If the latter, should it include an inclusion proof?  Should an explicit commitment to current state be part of each epoch's BB data? If so the answer to a query would be a proven state - as at the last epoch - plus an unproven current update.  Actually perhaps decoupling these is good - we say you can request a proven tally of the prior epoch (below), but separately (here) you can query the update that isn't yet on the BB.**)
+
+(**Question: we want a way to query earlier questions, e.g. for previous epochs, if the client has been offline for a while. We could implement this as either (1) amending the above query to include a root hash R, i.e. interpret this as a query for the questions since R, or (2) change the verification f'ns below so that rather than asking for something specific, you're simply asking for inclusion-proven list of all questions (or keys) between two updates.  (2) seems better. Which then means we need to look at Trillian to see whether there are completeness proofs, i.e. is it possible, without seeing the whole tree, to verify that you've seen _all_ the questions or all the decrypted tallies?  I assume we can do this simply with a counter, but it's not obvious.**)
+
 ## Verification functions
-There are three different things a client may wish to verify (though the first two are very similar):
+There are four different things a client may wish to verify (though the first two are very similar):
 
 - that certain previously-posted data is included on the BB,
 - that the root hash of a previous epoch is properly included in the current root hash,
+- that a previously-given answer to a query is included on the BB (e.g., tallies, questions). 
 - that the root hash is properly constructed from all posted data.
 
 Let H = h(D,CSig) be some data previously posted to the BB.
