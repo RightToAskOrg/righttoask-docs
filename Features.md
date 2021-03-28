@@ -24,7 +24,7 @@ Upvote or downvote/flick a question
 
 :   
 
-Attach a link to Hansard
+Attach a link to Hansard[^1]
 
 :   where a question was asked or answered
 
@@ -257,3 +257,7 @@ federal representatives.
 
 |:----------------|---------------:|
 |[Back: Overview](https://righttoaskorg.github.io/righttoask-docs/) | [Next: Screens and Usage](https://righttoaskorg.github.io/righttoask-docs/ScreensAndUsage)|
+
+*****
+
+[^1]: The Hansard is the report of the proceedings of the Australian parliament and its committees. This includes the Senate, House of Representatives, the Federation Chamber and all parliamentary committees. <https://www.aph.gov.au/parliamentary_business/hansard>
