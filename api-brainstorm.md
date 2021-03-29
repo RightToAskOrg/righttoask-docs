@@ -1,4 +1,4 @@
-# API
+# API Brainstorm
 
 ## Overview
 
@@ -16,7 +16,7 @@ We assume that all communicate are encrypted using HTTPS.
 
 A user $(Pu, Pr,phone, email)$ register him or herself by submitting  $(Pu, phone)$ to the server. The server then sends a $pin$ to the number provided. Upon receving the $pin$ the user submits $(Pu, pin)$ to prove and associate the public key with the phone number. Now the user can use the private key $Pr$ to sign all communications to server. The same could be done for email address, especailly for emails of government domain to verify the status of a government worker.
 
-The association $(Pu, phone, email)$ is stored on the server. To increase privacy, the email and phone number is stored as hashes. To ensure annomity, a digital mail box is used to store votes, where we only read the content of the messages when the association between $(Pu, content)$ is broken. To deter spamming and indencency, the posting of content isn't annoymous. 
+The association $(Pu, phone, email)$ is stored on the server. To increase privacy, the email and phone number is stored as hashes. To ensure annomity, we use a clever algorithm to only allow the decryption of aggregated votes $\sum E(Pr_i, vote_i) = E(Pr_{auth}, \sum votes_i)$ as roughly explained in [Election Guard](https://www.electionguard.vote/spec/0.95.0/1_Overview/#ballot-encryption). Where $Pr_{auth}$ is a secrete key "broken  up" and shared among trustees using [Sharmir's Secret Sharing](https://en.wikipedia.org/wiki/Shamir's_Secret_Sharing#Shamir's_secret_sharing_scheme). 
 
 ## Syncing of data
 
