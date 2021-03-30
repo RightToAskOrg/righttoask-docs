@@ -7,9 +7,9 @@ We envisage a bulletin board (BB) which is rebuilt on a relatively slow schedule
 - a proof of inclusion of any data posted in the previous epoch, and
 - a history proof (subtree proof) of inclusion of the prior epoch's root hash.
 
-See these resources for [a good pictorial introduction to Merkle Trees and inclusion proofs](https://sites.google.com/site/certificatetransparency/log-proofs-work), [Google's Trillian implementation](https://github.com/google/trillian) and [Crosby and Wallach's paper describing the original ideas](https://www.usenix.org/legacy/event/sec09/tech/full_papers/crosby.pdf).  
+See these resources for [a good pictorial introduction to Merkle Trees and inclusion proofs](https://sites.google.com/site/certificatetransparency/log-proofs-work),  and [Crosby and Wallach's paper describing the original ideas](https://www.usenix.org/legacy/event/sec09/tech/full_papers/crosby.pdf).  
 
-We assume the interfaces for inclusion and history proofs defined by Eleanor McMurtry [here](https://eleanorve.net/google-merkle-rs/google_merkle/struct.MerkleTree.html).  For now, call them inclusionProof and historyProof.  These proofs work only on hashes of data, not on the posted data directly.
+We assume the interfaces for inclusion and history proofs defined by Eleanor McMurtry [here](https://eleanorve.net/google-merkle-rs/google_merkle/struct.MerkleTree.html), based on [Google's pre-Trillian Merkle Tree implementation](https://github.com/google/certificate-transparency), which we will probably use.  For now, call them inclusionProof and historyProof.  These proofs work only on hashes of data, not on the posted data directly.
 
 ## Post functions
 
@@ -68,11 +68,11 @@ The server returns:
 - T = current tally updates for everything that has been decrypted in this epoch so far
 - SSig = signature<sub>server</sub>(h(T))
 
-(**Question: Can we get Trillian to deal elegantly with successive updates through the epoch? i.e. to make it obvious/easy to check that something you were told is subsequently included? Need to think about the data structure a little.  It probably works out fine if we simply make a Trillian leaf out of each batch decryption - clients can then verify inclusion later, though they obviously can't verify if something was withheld.**)
+(**Question: Can we deal elegantly with successive updates through the epoch? i.e. to make it obvious/easy to check that something you were told is subsequently included? Need to think about the data structure a little.  It probably works out fine if we simply make a Merkle leaf out of each batch decryption - clients can then verify inclusion later, though they obviously can't verify if something was withheld.**)
 
 (**Question: should a query answer include only the updates since the last epoch?  Or should it include the state as at the last BB update too?  If the latter, should it include an inclusion proof?  Should an explicit commitment to current state be part of each epoch's BB data? If so the answer to a query would be a proven state - as at the last epoch - plus an unproven current update.  Actually perhaps decoupling these is good - we say you can request a proven tally of the prior epoch (below), but separately (here) you can query the update that isn't yet on the BB.**)
 
-(**Question: we want a way to query earlier questions, e.g. for previous epochs, if the client has been offline for a while. We could implement this as either (1) amending the above query to include a root hash R, i.e. interpret this as a query for the questions since R, or (2) change the verification f'ns below so that rather than asking for something specific, you're simply asking for inclusion-proven list of all questions (or keys) between two updates.  (2) seems better. Which then means we need to look at Trillian to see whether there are completeness proofs, i.e. is it possible, without seeing the whole tree, to verify that you've seen _all_ the questions or all the decrypted tallies?  I assume we can do this simply with a counter, but it's not obvious.**)
+(**Question: we want a way to query earlier questions, e.g. for previous epochs, if the client has been offline for a while. We could implement this as either (1) amending the above query to include a root hash R, i.e. interpret this as a query for the questions since R, or (2) change the verification f'ns below so that rather than asking for something specific, you're simply asking for inclusion-proven list of all questions (or keys) between two updates.  (2) seems better. Which then means we need to consider completeness proofs, i.e. is it possible, without seeing the whole tree, to verify that you've seen _all_ the questions or all the decrypted tallies?  I assume we can do this simply with a counter, but it's not obvious.**)
 
 ## Verification functions
 There are four different things a client may wish to verify (though the first two are very similar):
@@ -92,7 +92,7 @@ The client's verify-inclusion query is to send H to the server.  The server resp
 
 where R is the current root hash.
 
-(**VT: I need to think about this  a little more, because it's not 100% clear what should happen if you ask for an inclusion proof from a few epochs ago.  I think the right answer is that you should get an inclusion proof for the root hash of that epoch (RPast), plus a history proof linking that root to the present epoch's root, i.e. historyProof(RPast,RPresent).  I'll check what Trillian does here.**)
+(**VT: I need to think about this  a little more, because it's not 100% clear what should happen if you ask for an inclusion proof from a few epochs ago.  I think the right answer is that you should get an inclusion proof for the root hash of that epoch (RPast), plus a history proof linking that root to the present epoch's root, i.e. historyProof(RPast,RPresent).  I'll check what Google's library does here.**)
 
 **Verify-history**
 
@@ -108,7 +108,7 @@ or an error if R1, R2 are not valid root hashes, or R1 is not a subtree of R2.
 
 If R2 is omitted, the server returns historyProof(R1,R) where R is the current root hash.
 
-(**VT: More details here.  It occurs to me that the Root hash data probably needs some metadata, e.g. a sequence number, so you can tell which roots are supposed to be subtrees of which others.  I assume Trillian already does this - will check.  Also, just as for the inclusion proofs, we can think about whether a history proof for two roots separated by several epochs is a direct subtree proof, or a list of immediate-subtree proofs, one for each epoch.  I suspect the latter is better - will check what Trillian does.**)
+(**VT: More details here.  It occurs to me that the Root hash data probably needs some metadata, e.g. a sequence number, so you can tell which roots are supposed to be subtrees of which others.  I assume Google already does this - will check.  Also, just as for the inclusion proofs, we can think about whether a history proof for two roots separated by several epochs is a direct subtree proof, or a list of immediate-subtree proofs, one for each epoch.  I suspect the latter is better.**)
 
 **Verify-BB**
 
@@ -133,7 +133,7 @@ There is no need for a history proof because the client can compute this themsel
 ### Details and other questions
 I'm not quite sure what M would be, but it seems a useful placeholder.  It is also possible that we should have a similar placeholder for the server's response.  e.g. it could tell you which epoch your data will appear in, to avoid ambiguity in the case where your upload occurred close to the boundary.
 
-I've also generally left out data that didn't need to be there, such as the data.  It's possible that it would be simpler to include this sometimes, rather than only the hash.
+I've also generally left out data that didn't need to be there, such as the vote data already known to the client.  It's possible that it would be simpler to include this sometimes, rather than only the hash.
 
 I have also omitted many of the details that need to be added for general good API design, such as a version number, to allow for later updates.
 
