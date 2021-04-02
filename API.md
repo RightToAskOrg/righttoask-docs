@@ -124,13 +124,74 @@ If R1 is omitted, the entire history since inception until R2 is returned.  If R
 
 There is no need for a history proof because the client can compute this themselves.
 
+## Data structures
+
+### Ballot
+
+We will use the same ballot data structure as ElectionGuard.  Something like this: @"{""ballot_style"":""ballot-style-1"",""contests"":[{""ballot_selections"":[{""object_id"":""contest-1-yes-selection-id"",""vote"":1},{""object_id"":""contest-1-no-selection-id"",""vote"":0}],""object_id"":""contest-1-id""},{""ballot_selections"":[{""object_id"":""contest-2-selection-1-id"",""vote"":1},{""object_id"":""contest-2-selection-2-id"",""vote"":0}],""object_id"":""contest-2-id""}],""object_id"":""ballot-id-123""}"; ;
 
 
+**VT: the following are very negotiable, with the clear intention of making sure EG compatibility is easy, esp including John Caron's verifier**
 
+The **contest-id** should be a hash of the question - H(Q).  We will only ever have two selections: up and down.  The selection IDs can therefore be very simply encoded using only one more bit (or perhaps an 'up' or 'down' string if that seems helpful). The hash should (perhaps) include the date, but should _not_ include other data such as links and tags, because these can change after the question is posted.
 
+We won't need an explicit 'abstain' option - we'll be able to tally the upvotes and the downvotes (regardless of whether they are an explicit downvote or a swipe-aside).  Then it will be immediately evident how many votes there were with two zeros, since the overall total votes will be obvious.
 
+**Question / thing to check: Can EG and/or JC's verifier aggregate some, but not necessarily all, contests on a ballot? And can it aggregate some, but not all, of the votes already received?** I assume the answer must be yes, because many US jurisdictions give slightly different ballots to different voters according to different addresses, but we may have an extreme version because each participant might vote on a completely different subset of questions. I think this effectively means each participants makes up their own "ballot-style."
 
-### Details and other questions
+We'll want to be able to take a _contest_ and choose to aggregate and decrypt 
+its votes, which may be spread across a lot of different positions on a lot of different ballots.
+
+Every submitted ballot is signed.  The hash of the ballot and its signature, H(B | Sig) is inserted in the Merkle Tree / BB.
+
+### Question
+
+The contest-id=H(Q) will become the database index for that question, to which the rest of the database record is attached.
+
+So a database record for a question will be:
+
+- H(Q): index/hash
+- Q: Question
+- .... [Insert other data here: date, links, expl, tags, etc...]
+- Signature (see above).
+
+H(Q) is inserted into the Merkle tree / BB.
+
+### Tallies
+
+A tally is:
+
+- A claimed total,
+- Decryption proofs from each trustee,
+- A clear statement of which votes were aggregated.  (**Check how EG does this - or does it assume that you always want to decrypt everything?)
+
+Again, this is hashed, stored in the database, and posted on the BB.
+
+### Registration
+
+A registration record is:
+
+- A username,
+- a public key,
+- (optionally) state or federal electorate(s).
+
+Again, this is hashed, stored in the database, and posted on the BB.
+
+### Inclusion verification
+
+**(See Eleanor's Rustdocs)**
+
+An inclusion proof is a list of hashes (and some metadata). The verifier checks that re-doing the tree construction using those hashes and its input, produces the expected root hash.  
+
+**(VT: add history)**
+
+### BB verification
+
+The verification that the tallies are a valid decryption of the votes on the BB should be exactly the same as ElectionGuard.  **(Probably significant detail to go through carefully.)**
+
+**Questions: So far this completely omits data structures for key generation - TBA.  **
+
+## Details and other questions
 I'm not quite sure what M would be, but it seems a useful placeholder.  It is also possible that we should have a similar placeholder for the server's response.  e.g. it could tell you which epoch your data will appear in, to avoid ambiguity in the case where your upload occurred close to the boundary.
 
 I've also generally left out data that didn't need to be there, such as the vote data already known to the client.  It's possible that it would be simpler to include this sometimes, rather than only the hash.
