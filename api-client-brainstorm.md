@@ -1,6 +1,20 @@
 ## Client API Draft
-&nbsp;
 
+This intention of this initial draft is to create a loose outline of the API requirements for the client app. Many aspects are subject to change and haven't been fully discussed or decided. All ammendments welcome.
+
+&nbsp;
+> All references to 'Tags' have been replaced with 'Topics' - just testing the less-social-media-y waters! 
+
+&nbsp;
+### Contents
+1. Main Screen
+2. Question Screen
+3. Ask Screen
+4. Account Screen
+5. Settings Screen
+6. Registration Screen
+
+&nbsp;
 ## 1. Main Screen
 The `Main Screen` is the first page that appears when the app is opened and contains a scrollable list of questions with options for sorting and filtering. On load or refresh, a batch of data will be synced to the phone.
 
@@ -22,7 +36,7 @@ The server responds with all entities that have a `lastModified` stamp between
 >* Questions
 >* Answers
 >* Users who have posted Questions or Answers
->* Tags 
+>* Topics 
 >* MPs & Committees 
 
 &nbsp;
@@ -52,7 +66,7 @@ HN: I think you're right, this probably isn't such a big issue due to the fact t
 >* Users who have posted the selected Questions and their associated Answers
 
 > The local database is also updated with the full set of,
->* Tags 
+>* Topics 
 >* MPs & committees 
 whether or not the user has registered.
 
@@ -83,9 +97,10 @@ Local Operations
 * The list of questions on the `Main Screen` is,
     * able to be sorted by certain parameters, eg. recently posted, trending, popularity,
     * searchable by key words via a text box,
-    * filterable by electorate, topic tag, MP or committee directed at, answer status 
+    * filterable by electorate, topics, MP or committee directed at, answer status 
 * A Question in the list can be clicked on for a detailed view, where Answers and Links are visible. See `Question Screen`.
-* A Tag on a Question can be clicked on to filter Questions on the `Main Screen` by that Tag. (VT: Good idea.)
+* A Topic assigned to a Question can be clicked on to filter Questions on the `Main Screen` by that Topic. (VT: Good idea.)
+* A Topic or set of Topics used to filter the `Main Screen` by can be followed and available via one's own `Account Screen`.
 * An MP or Committee a Question is directed at can be clicked on to see the `Account Screen` of the MP or Committee.
 
 &nbsp;
@@ -141,6 +156,30 @@ All users can add a Hansard link to a Question, indicating the Question was answ
 ___
 
 ```
+3. PATCH /api/{question}
+``` 
+An MP that has been identified as the recipient of a question may not believe they are the most appropriate person to be selected.  
+
+An MP is able to remove themselves from being tagged by the Question.
+```
+{
+    target: ""
+}
+```
+
+An MP is able to select another MP for which the Question is more relevant.
+```
+{
+    target: "AnotherMP"
+}
+```
+* *Question: Could we offer a drop-down to allow the MP to explain the removal/reassignment? Perhaps this is easier than requesting a text-explanation. Eg. 'Not relevent to my portfolio', 'Question is not from my electorate'*
+* *Question: Perhaps on reassignment, subject to question-asker approval, the Question will be removed from the MP's `Account Screen` and appear on the newly-tagged MP's `Account Screen`. Perhaps too complicated - what happens if the question-asker does not approve?*
+
+&nbsp;
+___
+
+```
 Local Operations
 ```
 * The User who posted a Question or Answer can be clicked on and their `Account Screen` displayed
@@ -150,7 +189,8 @@ ___
 ## 3. Ask Screen
 The `Ask Screen` is used to create a Question. It can be accessed via a navigation menu.  
 
-*Question: We would like to encourage users to view Questions in a category before posting a question. Could we ask for the topic tags and MP/committee in an initial screen, and provide an option for them to (for example) swipe up on a drawer at the bottom of the screen to 'See 10 questions about Covid' (like swiping up on an Instagram story to follow a link). When the MP is added, then it can update to 'See 5 questions about Covid for Scott Morrison'. The drawer can be swiped down and Question drafting resumed if nothing similar exists.*
+*Question: We would like to encourage users to view Questions in a category before posting a question. Could we ask for the question topics and MP/committee in an initial screen, and provide an option for them to (for example) swipe up on a drawer at the bottom of the screen to 'See 10 questions about Covid' (like swiping up on an Instagram story to follow a link). When the MP is added, then it can update to 'See 5 questions about Covid for Scott Morrison'. The drawer can be swiped down and Question drafting resumed if nothing similar exists.*
+
 &nbsp;
 ___
 
@@ -164,9 +204,9 @@ A registered user can ask a question.
     question: "Question",
     background: "Context",
     backgroundLink: "www.context.com",
-    tags: ["One", "Two", "Three", "Four"...],
+    topics: ["One", "Two", "Three", "Four"...],
     target: "UserMP",
-    author: "User", 
+    user: "User", 
     signature: // TODO - for BB
 }
 ```
@@ -174,8 +214,89 @@ A registered user can ask a question.
 > * The server will generate a `dateCreated` and `lastModified` timestamp for the Question on insertion into the db. An ID will be generated, `H(Q)`, and `upvotes` and `downvotes` set to `0`.  
 > * The Question object is returned and inserted into the local db.
 
-> * The server also returns an immediate acknowledgement (TODO) that the data will be included on the BB, without information that is subject to change (tags, target, background, backgroundLink)
+> * The server also returns an immediate acknowledgement (TODO) that the data will be included on the BB, without information that is subject to change (topics, target, background, backgroundLink)
 
 > * The User is forwarded to `Question Screen` where their new Question is displayed.
 
-* *Question: Are there a maximum number of tags allowed on a Question?*
+* *Question: Are there a maximum number of topics allowed for a Question?*
+
+* *Question: Should we have a 'Reason for Selection' dropdown for the MP who is targetted? Similar to the options provided for an MP to reject a question. Eg, 'X is my MP', 'X has a relevent portfolio'. It may make users be more thoughtful in their selection*
+
+&nbsp;
+___
+## 4. Account Screen
+
+The `Account Screen` displays User-provided information they have elected to share. A list of Questions asked by the User is also displayed. 
+In the case of MPs, a list of Questions they have provided Answers to is also displayed.
+
+___
+```
+Local Operations
+``` 
+* See list of followed Users, MPs, Committees
+* See list of Topics followed
+* Click on a User, MP or Committee and see their `Account Screen`
+* Click on a Topic and be directed to the `Main Screen` filtered by the selected Topic
+* Add a User, MP or Committee to your following list via their `Account Screen`
+
+&nbsp;
+___
+## 5. Settings Screen
+
+
+```
+1. POST /api/user/verify
+```
+An MP can provide their government email address (`@aph.gov.au`, `@parliament.vic.gov.au`...), which will be sent an email with a token they can use to verify their identity.
+
+* *Question: Does the email send a token that is to be entered into the app for verification, or is it simply a link in their email inbox they have to click on which communicates with our server?*
+
+```
+{
+    user: "UserMP",
+    email: "usermp@parliament.vic.gov.au",
+    signature: // TODO - for BB
+}
+```
+
+&nbsp;
+___
+```
+2. POST /api/user/delete
+```
+Any user can delete their account.
+* *Question: When an account is deleted, do the questions remain? Is the username still assigned to those questions?*
+
+```
+{
+    user: "User",
+    signature: // TODO - for BB
+}
+```
+
+&nbsp;
+* *Question: Can electorates be modified after registration?*
+&nbsp;
+___
+## 6. Registration Screen
+
+After browsing the app in a limited capacity, the User is requested to register and create an account. 
+* *Todo: Establish extent to which an unregistered User can browse and the points where they will be requested to register*
+
+```
+1. POST /api/user
+``` 
+Anyone can register to create an account.
+> Postcode is not mandatory for registration
+
+
+```
+{
+    username: "Username",
+    postcode: "1234",
+    publicKey: "5k8Yab",
+    signature: // TODO - for BB
+}
+```
+
+* *Question: We discussed with Nick how postcodes sometimes cross electorate boundaries - perhaps we could ask for postcodes at registration, then if they fall across multiple electorates create a notification on their* `Settings Screen` *that their electorate could not be established? We could also provide the option here to ask them to share location so we can determine electorate for them, if electorates can be modified after registration.* 
