@@ -301,7 +301,7 @@ After browsing the app in a limited capacity, the User is requested to register 
 * *Todo: Establish extent to which an unregistered User can browse and the points where they will be requested to register*
 
 ```
-1. POST /api/user
+1. POST /api/users
 ``` 
 Anyone can register to create an account.
 > Postcode is not mandatory for registration
