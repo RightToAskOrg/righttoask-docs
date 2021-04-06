@@ -6,13 +6,18 @@ This intention of this initial draft is to create a loose outline of the API req
 > All references to 'Tags' have been replaced with 'Topics' - just testing the less-social-media-y waters! 
 
 &nbsp;
-### Contents
-1. Main Screen
-2. Question Screen
-3. Ask Screen
-4. Account Screen
-5. Settings Screen
-6. Registration Screen
+___
+### Screens
+&nbsp;
+1. [Main Screen](#1-main-screen)  
+2. [Question Screen](#2-question-screen)  
+3. [Ask Screen](#3-ask-screen)  
+4. [Account Screen](#4-account-screen)  
+4. [Settings Screen](#5-settings-screen)  
+4. [Registration Screen](#6-registration-screen)  
+&nbsp;
+___
+
 
 &nbsp;
 ## 1. Main Screen
@@ -104,6 +109,8 @@ Local Operations
 * An MP or Committee a Question is directed at can be clicked on to see the `Account Screen` of the MP or Committee.
 
 &nbsp;
+
+[To Top](#screens)
 ___
 ## 2. Question Screen
 
@@ -185,6 +192,8 @@ Local Operations
 * The User who posted a Question or Answer can be clicked on and their `Account Screen` displayed
 
 &nbsp;
+
+[To Top](#screens)
 ___
 ## 3. Ask Screen
 The `Ask Screen` is used to create a Question. It can be accessed via a navigation menu.  
@@ -222,7 +231,10 @@ A registered user can ask a question.
 
 * *Question: Should we have a 'Reason for Selection' dropdown for the MP who is targetted? Similar to the options provided for an MP to reject a question. Eg, 'X is my MP', 'X has a relevent portfolio'. It may make users be more thoughtful in their selection*
 
+
 &nbsp;
+
+[To Top](#screens)
 ___
 ## 4. Account Screen
 
@@ -240,9 +252,12 @@ Local Operations
 * Add a User, MP or Committee to your following list via their `Account Screen`
 
 &nbsp;
+
+[To Top](#screens)
 ___
 ## 5. Settings Screen
 
+* *Question: Can electorates be modified after registration?*
 
 ```
 1. POST /api/user/verify
@@ -259,6 +274,7 @@ An MP can provide their government email address (`@aph.gov.au`, `@parliament.vi
 }
 ```
 
+
 &nbsp;
 ___
 ```
@@ -273,10 +289,11 @@ Any user can delete their account.
     signature: // TODO - for BB
 }
 ```
+> The User is redirected to the `Main Screen` and can view the app like an unregistered User.
 
 &nbsp;
-* *Question: Can electorates be modified after registration?*
-&nbsp;
+
+[To Top](#screens)
 ___
 ## 6. Registration Screen
 
@@ -300,3 +317,8 @@ Anyone can register to create an account.
 ```
 
 * *Question: We discussed with Nick how postcodes sometimes cross electorate boundaries - perhaps we could ask for postcodes at registration, then if they fall across multiple electorates create a notification on their* `Settings Screen` *that their electorate could not be established? We could also provide the option here to ask them to share location so we can determine electorate for them, if electorates can be modified after registration.* 
+
+&nbsp;
+
+[To Top](#screens)
+___
