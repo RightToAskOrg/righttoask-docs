@@ -24,7 +24,7 @@ ___
 The `Main Screen` is the first page that appears when the app is opened and contains a scrollable list of questions with options for sorting and filtering. On load or refresh, a batch of data will be synced to the phone.
 
 > Locally stored variables used:
->* `RightToAsk-Username` 
+>* `RightToAsk-Username`
 >* `RightToAsk-LastSync` 
 
 &nbsp;
@@ -198,13 +198,13 @@ ___
 ## 3. Ask Screen
 The `Ask Screen` is used to create a Question. It can be accessed via a navigation menu.  
 
-*Question: We would like to encourage users to view Questions in a category before posting a question. Could we ask for the question topics and MP/committee in an initial screen, and provide an option for them to (for example) swipe up on a drawer at the bottom of the screen to 'See 10 questions about Covid' (like swiping up on an Instagram story to follow a link). When the MP is added, then it can update to 'See 5 questions about Covid for Scott Morrison'. The drawer can be swiped down and Question drafting resumed if nothing similar exists.*
+*Question: We would like to encourage users to view Questions tagged with the same Topic before posting a new Question. Could we ask for the Topics and intended MP/Committee in an initial screen, and provide an option for them to (for example) swipe up on a drawer at the bottom of the screen to 'See 10 questions about Covid' (like swiping up on an Instagram story to follow a link). When the MP is added, then it can update to 'See 5 questions about Covid for Scott Morrison'. The drawer can be swiped down to close and Question drafting resumed if nothing similar exists.*
 
 &nbsp;
 ___
 
 ```
-1. POST /api/question
+1. POST /api/questions
 ``` 
 A registered user can ask a question.
 
@@ -227,7 +227,7 @@ A registered user can ask a question.
 
 > * The User is forwarded to `Question Screen` where their new Question is displayed.
 
-* *Question: Are there a maximum number of topics allowed for a Question?*
+* *Question: Are there a maximum number of Topics allowed for a Question?*
 
 * *Question: Should we have a 'Reason for Selection' dropdown for the MP who is targetted? Similar to the options provided for an MP to reject a question. Eg, 'X is my MP', 'X has a relevent portfolio'. It may make users be more thoughtful in their selection*
 
