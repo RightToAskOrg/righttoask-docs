@@ -91,7 +91,8 @@ Registered users can upvote or downvote questions in the list.
 
 * *Question: Can a user change their vote?  
 VT: No, that goes into the too-hard box, probably forever.  
-HN: We should probably make an effort to ensure the upvote/downvote buttons aren't too close to each other and also aren't in places where people normally place fingers to scroll :)*
+HN: We should probably make an effort to ensure the upvote/downvote buttons aren't too close to each other and also aren't in places where people normally place fingers to scroll :)
+VT: Right! Good point. And I can imagine upvoting a question, only to see a better one later.  Could we possibly say that it stores your votes only locally for a while, until you either background it or explicitly decide to upload?  Hard to know how to do the UI well for this - would need to have a very clear way of communicating when votes had been uploaded (and were therefore unchangeable) and when they hadn't.  I guess we could always grey them out.*
 * *Question: Do we need to (optionally be able to) incorporate the user's electorate into their vote? Can an MP sufficiently say 'My electorate cares about this' if we only know the person who posted the question is in the electorate, but the votes are anonymous? VT: I think yes - a person should optionally be able to state their electorate when they register, which then becomes part of their public profile (along with their public key).  Then, when we aggregate and tally, we can do sub-tallies by electorate.  Of course, we need to be extra careful about privacy if the sets are small.*
 
 &nbsp;
@@ -180,8 +181,8 @@ An MP is able to select another MP for which the Question is more relevant.
     target: "AnotherMP"
 }
 ```
-* *Question: Could we offer a drop-down to allow the MP to explain the removal/reassignment? Perhaps this is easier than requesting a text-explanation. Eg. 'Not relevent to my portfolio', 'Question is not from my electorate'*
-* *Question: Perhaps on reassignment, subject to question-asker approval, the Question will be removed from the MP's `Account Screen` and appear on the newly-tagged MP's `Account Screen`. Perhaps too complicated - what happens if the question-asker does not approve?*
+* *Question: Could we offer a drop-down to allow the MP to explain the removal/reassignment? Perhaps this is easier than requesting a text-explanation. Eg. 'Not relevent to my portfolio', 'Question is not from my electorate' VT: This is tricky all round, because we don't want it to be too easy for an MP to completely remove themselves.*
+* *Question: Perhaps on reassignment, subject to question-asker approval, the Question will be removed from the MP's `Account Screen` and appear on the newly-tagged MP's `Account Screen`. Perhaps too complicated - what happens if the question-asker does not approve? VT: Maybe then both the original tag and the added tag stay?  Until one or the other of them resolves/answers it?*
 
 &nbsp;
 ___
@@ -227,9 +228,9 @@ A registered user can ask a question.
 
 > * The User is forwarded to `Question Screen` where their new Question is displayed.
 
-* *Question: Are there a maximum number of Topics allowed for a Question?*
+* *Question: Are there a maximum number of Topics allowed for a Question? VT: Yes, seems like a good idea.*
 
-* *Question: Should we have a 'Reason for Selection' dropdown for the MP who is targetted? Similar to the options provided for an MP to reject a question. Eg, 'X is my MP', 'X has a relevent portfolio'. It may make users be more thoughtful in their selection*
+* *Question: Should we have a 'Reason for Selection' dropdown for the MP who is targetted? Similar to the options provided for an MP to reject a question. Eg, 'X is my MP', 'X has a relevent portfolio'. It may make users be more thoughtful in their selection.  VT: Good idea. It's an entirely different thing to be asking your own MP for/about something vs suggesting a question for a committee they're on.  I think there is a UI design question of how we lead people to the right sets of reasons.  It may actually be that we flip the whole thing around and ask them what they're trying to do at the beginning, so that by the time they're sending off their question, the app already knows.  But either way the data structure should, at a minimum, tag it as either a question to be answered by the MP or a question to be posed in committee.*
 
 
 &nbsp;
@@ -251,20 +252,22 @@ Local Operations
 * Click on a Topic and be directed to the `Main Screen` filtered by the selected Topic
 * Add a User, MP or Committee to your following list via their `Account Screen`
 
+* *Question: The person's own view of their account screen will have extra info, i.e. the lists of things and people they're following, which a third-party's view of their account screen doesn't see.  It's possible we should think of these as two different screens, or perhaps as the read version and the edit version of a screen.   *
+
 &nbsp;
 
 [To Top](#screens)
 ___
 ## 5. Settings Screen
 
-* *Question: Can electorates be modified after registration?*
+* *Question: Can electorates be modified after registration? VT: I think probably yes, though it's a shame to have a verified account change its electorate without that being verified.*
 
 ```
 1. POST /api/user/verify
 ```
 An MP can provide their government email address (`@aph.gov.au`, `@parliament.vic.gov.au`...), which will be sent an email with a token they can use to verify their identity.
 
-* *Question: Does the email send a token that is to be entered into the app for verification, or is it simply a link in their email inbox they have to click on which communicates with our server?*
+* *Question: Does the email send a token that is to be entered into the app for verification, or is it simply a link in their email inbox they have to click on which communicates with our server? VT: I'm inclined to discourage link-clicking and suggest we send people a token/PIN to type in to the app, though I acknowledge this is more work for the user.  This is a fairly standard workflow that most people will have done for other apps.*
 
 ```
 {
@@ -281,7 +284,7 @@ ___
 2. POST /api/user/delete
 ```
 Any user can delete their account.
-* *Question: When an account is deleted, do the questions remain? Is the username still assigned to those questions?*
+* *Question: When an account is deleted, do the questions remain? Is the username still assigned to those questions? VT: I think on the BB it just stays, though we will mark the public key as deprecated and refuse to accept any new questions or votes. For in-app display perhaps we just display the question with "deleted user" as the author?*
 
 ```
 {
@@ -298,7 +301,7 @@ ___
 ## 6. Registration Screen
 
 After browsing the app in a limited capacity, the User is requested to register and create an account. 
-* *Todo: Establish extent to which an unregistered User can browse and the points where they will be requested to register*
+* *Todo: Establish extent to which an unregistered User can browse and the points where they will be requested to register. VT: You can read anything without registering, but if you want to write (including vote, ask a question, add a link, etc) you have to register. *
 
 ```
 1. POST /api/users
@@ -316,7 +319,7 @@ Anyone can register to create an account.
 }
 ```
 
-* *Question: We discussed with Nick how postcodes sometimes cross electorate boundaries - perhaps we could ask for postcodes at registration, then if they fall across multiple electorates create a notification on their* `Settings Screen` *that their electorate could not be established? We could also provide the option here to ask them to share location so we can determine electorate for them, if electorates can be modified after registration.* 
+* *Question: We discussed with Nick how postcodes sometimes cross electorate boundaries - perhaps we could ask for postcodes at registration, then if they fall across multiple electorates create a notification on their* `Settings Screen` *that their electorate could not be established? We could also provide the option here to ask them to share location so we can determine electorate for them, if electorates can be modified after registration. VT: Yes, this is again is a UI design problem, with varying solutions that we could try out on people depending on their privacy preferences and prior knowledge.  (a) Doesn't want to state electorate, (b) already knows electorate (state and federal), (c) happy to be redirected to AEC (VEC) website to enter address, (d) happy to enter address into app, starting with postcode so this can be used if sufficient, (e) happy to give the app (temporary) location permission.  Not sure which of these we should try to implement.* 
 
 &nbsp;
 
