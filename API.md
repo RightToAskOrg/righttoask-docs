@@ -73,22 +73,15 @@ The server returns:
 - Q = list of questions uploaded
 - Q_Edits = list of edits (e.g. answers, links, new tags) to existing questions
 - T = list of new tallies (which may be increments on previous tallies)
-- R = list of new registrations 
-since prior_timestamp.
+- Reg = list of new registrations    
 
-Also SSig = signature<sub>server</sub>(h(Q | Q_Edits | T | R))
+since prior_timestamp. Plus:
 
+- PR - most recent published root
+- Pending - An indication of which of the returned values are still pending (i.e. not incorporated into PR)
 
-**Query questions**
+Also SSig = signature<sub>server</sub>(h(Q | Q_Edits | T | Reg | PR | Pending))
 
-No input.
-
-The server returns:
-
-- Q = list of questions uploaded so far in this epoch
-- SSig = signature<sub>server</sub>(h(Q))
-
-(**Note: this isn't quite right because we really only need the ones that are new since the last time we queried.  I hope there are automatic/standard ways to deal with this.**)
 
 **Query key**
 Client sends:
@@ -99,20 +92,17 @@ Server returns:
 
 - ID
 - PK<sub>ID</sub> = the public key associated with that ID
+- PR - most recent published root
+- Pending (bool) - An indication of whether this value is still pending (i.e. not incorporated into PR)
 - Ssig = signature<sub>server</sub>(h(ID,PK<sub>ID</sub>))
 
-**Query tallies**
+(**Question: Think about exactly what verification info we want with the PK - do we need the current root? Do we need the server to sign it? Should you get back either a sig or a BB inclusion proof depending on whether it has already been included?**)
 
-No input.
+(**Question: Earlier verisons had separate queries for questions/question_edits and for tallies.  I'm not sure this is useful, so I've deleted them. We could, however, consider various kinds of search-based updates, e.g. all the questions posted by one user, or for answers or tallies for the questions that you asked. This would be easy - the question is whether you would ever _not_ want everything else as well.**)
 
-The server returns:
+(**Question: Need to make it obvious/easy to check that something you were told is subsequently included. Need to think about the data structure a little.  It probably works out fine if we simply make a Merkle leaf out of each batch decryption - clients can then verify inclusion later, though they obviously can't verify if something was withheld.**)
 
-- T = current tally updates for everything that has been decrypted in this epoch so far
-- SSig = signature<sub>server</sub>(h(T))
-
-(**Question: Can we deal elegantly with successive updates through the epoch? i.e. to make it obvious/easy to check that something you were told is subsequently included? Need to think about the data structure a little.  It probably works out fine if we simply make a Merkle leaf out of each batch decryption - clients can then verify inclusion later, though they obviously can't verify if something was withheld.**)
-
-(**Question: should a query answer include only the updates since the last epoch?  Or should it include the state as at the last BB update too?  If the latter, should it include an inclusion proof?  Should an explicit commitment to current state be part of each epoch's BB data? If so the answer to a query would be a proven state - as at the last epoch - plus an unproven current update.  Actually perhaps decoupling these is good - we say you can request a proven tally of the prior epoch (below), but separately (here) you can query the update that isn't yet on the BB.**)
+(**Question: should a query answer include only the updates since the last epoch?  Or should it include the state as at the last BB update too?  If the latter, should it include an inclusion proof?  Should an explicit commitment to current state be part of each epoch's BB data? If so the answer to a query would be a proven state - as at the last epoch - plus an unproven current update.  Actually perhaps decoupling these is good - we say you can request a proven tally of the prior epoch (below), but separately (here) you can query without verification, including updates that aren't yet on the BB.**)
 
 (**Question: we want a way to query earlier questions, e.g. for previous epochs, if the client has been offline for a while. We could implement this as either (1) amending the above query to include a root hash R, i.e. interpret this as a query for the questions since R, or (2) change the verification f'ns below so that rather than asking for something specific, you're simply asking for inclusion-proven list of all questions (or keys) between two updates.  (2) seems better. Which then means we need to consider completeness proofs, i.e. is it possible, without seeing the whole tree, to verify that you've seen _all_ the questions or all the decrypted tallies?  I assume we can do this simply with a counter, but it's not obvious.**)
 
@@ -124,7 +114,7 @@ There are four different things a client may wish to verify (though the first tw
 - that a previously-given answer to a query is included on the BB (e.g., tallies, questions). 
 - that the root hash is properly constructed from all posted data.
 
-Let H = h(D,CSig) be some data previously posted to the BB.
+Let H = h(D) be some data previously posted to the BB. This could be something posted by a user (as h(D,CSig)), by the server (as a tally update) or by the trustees (e.g. decryption proof). The requester may know about it because they submitted it, or because they received it in response to a query (above).
 
 **Verify-inclusion**
 
@@ -134,7 +124,9 @@ The client's verify-inclusion query is to send H to the server.  The server resp
 
 where R is the current root hash.
 
-(**VT: I need to think about this  a little more, because it's not 100% clear what should happen if you ask for an inclusion proof from a few epochs ago.  I think the right answer is that you should get an inclusion proof for the root hash of that epoch (RPast), plus a history proof linking that root to the present epoch's root, i.e. historyProof(RPast,RPresent).  I'll check what Google's library does here.**)
+(**VT: Note: if I understand rightly, the BB abstracts for us whether your H is included directly in the current PR or indirectly in a PR from a few epochs ago.**)
+
+(**VT: Note: We probably want a nice bulk way to verify the inclusion of everything you were told was pending.  Though of course it's completely fine if you can't do this until the whole new epoch's transcript is published, so the most efficient way to do it may simply be to download all the data for the just-finished epoch, check its proper formation, and then (plainly) check that it matches what you were told.**)
 
 **Verify-history**
 
@@ -150,7 +142,7 @@ or an error if R1, R2 are not valid root hashes, or R1 is not a subtree of R2.
 
 If R2 is omitted, the server returns historyProof(R1,R) where R is the current root hash.
 
-(**VT: More details here.  It occurs to me that the Root hash data probably needs some metadata, e.g. a sequence number, so you can tell which roots are supposed to be subtrees of which others.  I assume Google already does this - will check.  Also, just as for the inclusion proofs, we can think about whether a history proof for two roots separated by several epochs is a direct subtree proof, or a list of immediate-subtree proofs, one for each epoch.  I suspect the latter is better.**)
+(**VT: More details here.  It occurs to me that the Root hash data probably needs some metadata, e.g. a sequence number, so you can tell which roots are supposed to be subtrees of which others.  Check what the BB does here.**)
 
 **Verify-BB**
 
@@ -165,6 +157,10 @@ and the server returns
 If R1 is omitted, the entire history since inception until R2 is returned.  If R2 is omitted, the current root hash is used.
 
 There is no need for a history proof because the client can compute this themselves.
+
+**Verify-crypto**
+
+Check all the decryption proofs, vote aggregations, etc.
 
 ## BB Data structures
 
