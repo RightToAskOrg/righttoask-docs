@@ -29,9 +29,11 @@ The BB can produce:
 
 For now, call them inclusionProof and historyProof.  These proofs work only on hashes of data, not on the posted data directly.
 
+The main functionality of the rightToAsk client-server interaction is to post questions (and links, tags, or answers) or encrypted votes, and read others' questions and the decrypted tallies. A secondary function is to post and read public keys, for signing and verification of the uploaded data.  (At a later time, we may add public encryption keys for direct messages.) We also add verification of the BB state. 
+
 ## Post functions
 
-The main functionality of the rightToAsk client-server interaction is very similar to that of the prototype, except that we also add verification of the BB state.  This means that each upload is divided into two parts: data to be uploaded to the BB, and other optional metadata.  The BB data also needs the client's signature.  So a typical post, e.g. for registration, question-posting, or voting, has this structure:
+Each upload is divided into two parts: data to be uploaded to the BB, and other optional metadata.  The BB data also needs the client's signature.  So a typical post, e.g. for registration, question-posting, or voting, has this structure:
 
 **Post**
 
@@ -54,6 +56,10 @@ At this point, the data should appear in BB.get_pending_hash_values.
 (VT: not 100% clear what the data format should be.  Ideally it should allow for easy verification later, when the items are included in a published root.)
 
 The exact requirements for the data obviously depend on the specific kind of message. For registration, data would include a name, public key and (optionally) electorate.  For voting, data would include vote ciphertexts with sufficient extra data to identify which questions they were answering.  For question-asking, the data is quite complex and would include the text of the question, the ID of the person asking, any tags or links, etc.  We will also add some more functionality for answering questions, marking them as answered, re-tagging them for other MPs, etc...
+
+### Specific example POST functions
+
+TODO
 
 ## Query functions
 
@@ -126,7 +132,7 @@ where R is the current root hash.
 
 (**VT: Note: if I understand rightly, the BB abstracts for us whether your H is included directly in the current PR or indirectly in a PR from a few epochs ago.**)
 
-(**VT: Note: We probably want a nice bulk way to verify the inclusion of everything you were told was pending.  Though of course it's completely fine if you can't do this until the whole new epoch's transcript is published, so the most efficient way to do it may simply be to download all the data for the just-finished epoch, check its proper formation, and then (plainly) check that it matches what you were told.**)
+(**VT: Note: We probably want a nice bulk way to verify the inclusion of everything you were told was pending.  Though of course it's completely fine if you can't do this until the whole new epoch's transcript is published, so the most efficient way to do it may simply be to download all the data for the just-finished epoch, check its proper formation, and then (plainly) check that it matches what you were told. VT(2) Actually this is possibly the most important thing, and is quite easy given that a query gives you the current root.  So there's an obvious local verification function in response to a query, which is to check that the complete included data in PR is (a) properly included in PR and (b) matches any 'pending' information you were given in response to earlier queries.**)
 
 **Verify-history**
 
