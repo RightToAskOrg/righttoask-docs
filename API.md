@@ -31,6 +31,128 @@ For now, call them inclusionProof and historyProof.  These proofs work only on h
 
 The main functionality of the rightToAsk client-server interaction is to post questions (and links, tags, or answers) or encrypted votes, and read others' questions and the decrypted tallies. A secondary function is to post and read public keys, for signing and verification of the uploaded data.  (At a later time, we may add public encryption keys for direct messages.) We also add verification of the BB state. 
 
+(VT Note/TODO: Be consistent about whether a question or other data item is referred to by the hash of its data or the hash of its (data || sig).  (1) Consistency with Election Guard would be good, but (2) ease-of-use of BB would be good, which favours hashing (item+sig).  OTOH, if there are some items without sigs it might be annoying/complicated.)
+
+## Main Data structures
+
+**Questions: So far this completely omits data structures for key generation - TBA.  **
+
+### Election Transcript
+The election transcript consists of everything worth verifying:
+
+- **Questions** including answers, directions, etc.
+- **Ballots** which contain encrypted votes on questions
+- **Tallies** i.e. decrypted aggregated votes on questions
+- **Registrations** including a public key and name  
+
+An **Entity** is either a department/ministerial portfolio (preloaded), a public authority (also preloaded, prob from RightToKnow), or a system user (an MP, registered citizen, or registered org rep). 
+
+<a id="question_def"/>
+### Question 
+
+The contest-id=H(Q) will become the database index for that question, to which the rest of the database record is attached.
+
+So a database record for a question will be:
+
+- H(Q): index/hash
+- Q: Question
+- Question_Suggester: ID
+- .... [Insert other data here: date, links, expl, tags, etc...]
+- Signature (see above).
+
+H(Q) is inserted into the Merkle tree / BB.
+
+Validity: 
+
+Compulsory fields: Question_Text, question-suggester, sig. Others, including lists, may be blank.
+
+The permission and validity rules for each field are:
+
+- Question_Text: string
+    * Validity: character length
+    * Permission: must be from the question-suggester
+- Question_Suggester: Entity
+    * Validity: must be a system user.
+    * Permission: n/a 
+- Background: string
+    * Validity: character length
+    * Permission: must be from the question-suggester
+- Question_Askers: List(Entity)
+    * Validity: must be MPs.  
+    * Permission: n/a
+- Question_Answerers: List(Entity)
+    * Validity: must be MPs, depts/portfolios, or public authorities
+    * Permission: n/a
+- Answer: List(string, answerer)
+    * Validity: character length; answerer must match the sig.
+    * Permission: must be from an MP 
+- Answer_accepted: bool (default false)
+    * Validity: n/a
+    * Permission: must be from the question-suggester
+- Hansard link: List(url)
+    * Validity: domain must be aph.gov.au, parliament.vic.gov.au, etc. (preloaded permit-list - note that url sanitation is nontrivial).
+    * Permissions: n/a
+- Keywords: List(String)
+    * Validity: short list of short words
+    * Permission: n/a
+- Topics: List(Topics)
+    * Validity: short list of pre-loaded topics
+    * Permission: n/a
+- Signature: Sig
+    * Must be a valid sig on all uploaded data with Question_Suggester's key.
+
+Not clear whether we need keywords or topics.
+
+(**VT: I would like a nice way to express the simple idea that you can change the 'answer accepted' bool from false to true, but not vice versa, and that this is an append-only-style operation, i.e. an 'or only' operation. Not sure of the most elegant way to express this.)
+
+Also the neccessity to write a valid sig on your message is universal.  In this case the person uploading is supposed to put their name to a specific part of the data structure, so that requirement (which is usually ephemeral) imposes this permanent notion of validity on the database.
+
+
+### Ballot
+
+We will use the same ballot data structure as ElectionGuard.  (VT: Note, these have changed - get updates.) Something like this: @"{""ballot_style"":""ballot-style-1"",""contests"":[{""ballot_selections"":[{""object_id"":""contest-1-yes-selection-id"",""vote"":1},{""object_id"":""contest-1-no-selection-id"",""vote"":0}],""object_id"":""contest-1-id""},{""ballot_selections"":[{""object_id"":""contest-2-selection-1-id"",""vote"":1},{""object_id"":""contest-2-selection-2-id"",""vote"":0}],""object_id"":""contest-2-id""}],""object_id"":""ballot-id-123""}"; ;
+
+
+**VT: the following are very negotiable, with the clear intention of making sure EG compatibility is easy, esp including John Caron's verifier**
+
+The **contest-id** should be a hash of the question - H(Q).  We will only ever have two selections: up and down.  The selection IDs can therefore be very simply encoded using only one more bit (or perhaps an 'up' or 'down' string if that seems helpful). The hash should (perhaps) include the date, but should _not_ include other data such as links and tags, because these can change after the question is posted.
+
+We won't need an explicit 'abstain' option - we'll be able to tally the upvotes and the downvotes (regardless of whether they are an explicit downvote or a swipe-aside).  Then it will be immediately evident how many votes there were with two zeros, since the overall total votes will be obvious.
+
+**Question / thing to check: Can EG and/or JC's verifier aggregate some, but not necessarily all, contests on a ballot? And can it aggregate some, but not all, of the votes already received?** I assume the answer must be yes, because many US jurisdictions give slightly different ballots to different voters according to different addresses, but we may have an extreme version because each participant might vote on a completely different subset of questions. I think this effectively means each participant makes up their own "ballot-style."
+
+We'll want to be able to take a _contest_ and choose to aggregate and decrypt 
+its votes, which may be spread across a lot of different positions on a lot of different ballots.
+
+Every submitted ballot is signed.  The hash of the ballot and its signature, H(B | Sig) is inserted in the Merkle Tree / BB.
+
+
+
+### Tallies
+
+A tally is:
+
+- A claimed total,
+- Decryption proofs from each trustee,
+- A clear statement of which votes were aggregated.  (**Check how EG does this - or does it assume that you always want to decrypt everything?)
+
+Again, this is hashed, stored in the database, and posted on the BB.
+
+### Registration
+
+A registration record is:
+
+- A username,
+- a public key,
+- boolean: Is_MP,
+- boolean: Is_Org,
+- (optionally) state or federal electorate(s),
+- (optionally) email domain (e.g. parliament.vic.gov.au or acf.org.au)
+
+Again, this is hashed, stored in the database, and posted on the BB.
+
+(VT: Consider what should happen when someone wants to register several different keys from different devices, or different people who represent the same MP.)
+
 ## Post functions
 
 Each upload is divided into two parts: data to be uploaded to the BB, and other optional metadata.  The BB data also needs the client's signature.  So a typical post, e.g. for registration, question-posting, or voting, has this structure:
@@ -57,9 +179,65 @@ At this point, the data should appear in BB.get_pending_hash_values.
 
 The exact requirements for the data obviously depend on the specific kind of message. For registration, data would include a name, public key and (optionally) electorate.  For voting, data would include vote ciphertexts with sufficient extra data to identify which questions they were answering.  For question-asking, the data is quite complex and would include the text of the question, the ID of the person asking, any tags or links, etc.  We will also add some more functionality for answering questions, marking them as answered, re-tagging them for other MPs, etc...
 
-### Specific example POST functions
+### Specific POST functions
 
-TODO
+**New Question**
+
+- D = 
+- M = 
+
+Responses: 
+
+- Ack (with sig, as above), 
+- Validity failure (details), 
+- Permission failure (details). 
+- Duplicate failure (h).
+
+The server applies question's [validity and permission rules](#question_def) (which should also be checked by the client). 
+
+(VT: Consider exactly how perfectly equal a duplicate should need to be in order to be automatically excluded.  I think the same Question_Text except whitespace, and the same other data. In particular, even an identical question with different background should probably be allowed.)
+
+**Edit Question**
+
+D includes:
+
+- h: the hash used to identify the question, 
+- Edits: a list of (field, value) pairs, where the field is an element of the [question data structure](**link) and the value is an update to be appended to the existing value. 
+
+Responses: 
+
+- Success (hash of D + server sig), 
+- Auth Failure (you're not permitted to do this update, which may be either because you don't have permission to update that field, or there are already too many answers of that kind), 
+- Merge failure (you need to manually resolve X - for example, if two people have simultaneously updated a field that can only have one element).
+
+The server applies question's [validity and permission rules](#question_def) (which should also be checked by the client). 
+
+(VT: Remember censorship when considering what conflicts with what - in some circumstances a moderator should be able to remove stuff. Definitely questions.  Possibly answers from MPs.)
+
+Simultaneous update rules:
+
+The merge rules for each field are:
+- Question_Text, Question_Suggester, Signature: Reject updates.
+- Background: Reject updates unless currently blank.
+- Question_Askers, Question_Answerers: Eliminate duplicates (including with values already present). If the total number of values doesn't exceed the limit, accept. If the limit has already been exceeded, reject. If it hasn't, but would if this update was accepted, send a merge request back to the client (pick at most m out of the n you tried to submit...).  Note that this might cause cascading merges that need to be manually resolved, but that's less trouble than allowing locks.
+- Answer: If there are simultaneous valid \& permitted updates, accept both (append), regardless of whether the MP is the person who was tagged.
+- Answer_accepted: May be changed from false to true.
+- Hansard link, Keywords, Topics: Same as Question_Askers, Question_Answerers.
+
+**New Registration**
+
+D includes:
+
+- Name
+- PK: public key
+- (optional) electorate
+- (optional) email domain
+
+M includes:
+
+- (optional) email name
+
+**Edit Registration**
 
 ## Query functions
 
@@ -168,70 +346,7 @@ There is no need for a history proof because the client can compute this themsel
 
 Check all the decryption proofs, vote aggregations, etc.
 
-## BB Data structures
 
-**Questions: So far this completely omits data structures for key generation - TBA.  **
-
-### Election Transcript
-The election transcript consists of everything worth verifying:
-
-- **Questions** including answers, directions, etc.
-- **Ballots** which contain encrypted votes on questions
-- **Tallies** i.e. decrypted aggregated votes on questions
-- **Registrations** including a public key and name  
-
-### Question
-
-The contest-id=H(Q) will become the database index for that question, to which the rest of the database record is attached.
-
-So a database record for a question will be:
-
-- H(Q): index/hash
-- Q: Question
-- .... [Insert other data here: date, links, expl, tags, etc...]
-- Signature (see above).
-
-H(Q) is inserted into the Merkle tree / BB.
-
-### Ballot
-
-We will use the same ballot data structure as ElectionGuard.  (VT: Note, these have changed - get updates.) Something like this: @"{""ballot_style"":""ballot-style-1"",""contests"":[{""ballot_selections"":[{""object_id"":""contest-1-yes-selection-id"",""vote"":1},{""object_id"":""contest-1-no-selection-id"",""vote"":0}],""object_id"":""contest-1-id""},{""ballot_selections"":[{""object_id"":""contest-2-selection-1-id"",""vote"":1},{""object_id"":""contest-2-selection-2-id"",""vote"":0}],""object_id"":""contest-2-id""}],""object_id"":""ballot-id-123""}"; ;
-
-
-**VT: the following are very negotiable, with the clear intention of making sure EG compatibility is easy, esp including John Caron's verifier**
-
-The **contest-id** should be a hash of the question - H(Q).  We will only ever have two selections: up and down.  The selection IDs can therefore be very simply encoded using only one more bit (or perhaps an 'up' or 'down' string if that seems helpful). The hash should (perhaps) include the date, but should _not_ include other data such as links and tags, because these can change after the question is posted.
-
-We won't need an explicit 'abstain' option - we'll be able to tally the upvotes and the downvotes (regardless of whether they are an explicit downvote or a swipe-aside).  Then it will be immediately evident how many votes there were with two zeros, since the overall total votes will be obvious.
-
-**Question / thing to check: Can EG and/or JC's verifier aggregate some, but not necessarily all, contests on a ballot? And can it aggregate some, but not all, of the votes already received?** I assume the answer must be yes, because many US jurisdictions give slightly different ballots to different voters according to different addresses, but we may have an extreme version because each participant might vote on a completely different subset of questions. I think this effectively means each participant makes up their own "ballot-style."
-
-We'll want to be able to take a _contest_ and choose to aggregate and decrypt 
-its votes, which may be spread across a lot of different positions on a lot of different ballots.
-
-Every submitted ballot is signed.  The hash of the ballot and its signature, H(B | Sig) is inserted in the Merkle Tree / BB.
-
-
-
-### Tallies
-
-A tally is:
-
-- A claimed total,
-- Decryption proofs from each trustee,
-- A clear statement of which votes were aggregated.  (**Check how EG does this - or does it assume that you always want to decrypt everything?)
-
-Again, this is hashed, stored in the database, and posted on the BB.
-
-### Registration
-
-A registration record is:
-
-- A username,
-- a public key,
-- (optionally) state or federal electorate(s).
-
-Again, this is hashed, stored in the database, and posted on the BB.
 
 ## Verification data structures
 
