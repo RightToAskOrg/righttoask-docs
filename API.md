@@ -183,8 +183,8 @@ The exact requirements for the data obviously depend on the specific kind of mes
 
 **New Question**
 
-- D = 
-- M = 
+- D =  Question - see above.
+- M =  List(Enc(address, MP public key))
 
 Responses: 
 
@@ -196,6 +196,10 @@ Responses:
 The server applies question's [validity and permission rules](#question_def) (which should also be checked by the client). 
 
 (VT: Consider exactly how perfectly equal a duplicate should need to be in order to be automatically excluded.  I think the same Question_Text except whitespace, and the same other data. In particular, even an identical question with different background should probably be allowed.)
+
+M is empty if the user has not opted in to sharing their address with their MP, or if they have not tagged their MP as either a Question_Asker or Question_Answerer. Otherwise, M contains a list of ciphertexts containing the person's address, encrypted with the public encryption keys of each tagged MP.
+
+(VT: TODO: resolve inconsistencies with registration data structures - atm we don't have public encryption keys, just digital sig keys, but we'll need them for this feature. Need to think/ask about multiple public keys for staffers associated with one MP.)
 
 **Edit Question**
 
@@ -290,7 +294,9 @@ Server returns:
 
 (**Question: we want a way to query earlier questions, e.g. for previous epochs, if the client has been offline for a while. We could implement this as either (1) amending the above query to include a root hash R, i.e. interpret this as a query for the questions since R, or (2) change the verification f'ns below so that rather than asking for something specific, you're simply asking for inclusion-proven list of all questions (or keys) between two updates.  (2) seems better. Which then means we need to consider completeness proofs, i.e. is it possible, without seeing the whole tree, to verify that you've seen _all_ the questions or all the decrypted tallies?  I assume we can do this simply with a counter, but it's not obvious.**)
 
-## Verification functions
+(VT: TODO: When the querier is an MP, the server should also return the list of encrypted addresses for any questions tagged for that MP.)
+
+## Verification
 There are four different things a client may wish to verify (though the first two are very similar):
 
 - that certain previously-posted data is included on the BB,
@@ -299,6 +305,19 @@ There are four different things a client may wish to verify (though the first tw
 - that the root hash is properly constructed from all posted data.
 
 Let H = h(D) be some data previously posted to the BB. This could be something posted by a user (as h(D,CSig)), by the server (as a tally update) or by the trustees (e.g. decryption proof). The requester may know about it because they submitted it, or because they received it in response to a query (above).
+
+### Verification data structures
+
+**(See Eleanor's Rustdocs and equivalent for Andrew's BB)**
+
+An inclusion proof is a list of hashes (and some metadata). The verifier checks that re-doing the tree construction using those hashes and its input, produces the expected root hash.  
+
+**(VT: add history)**
+
+### BB verification
+
+The verification that the tallies are a valid decryption of the votes on the BB should be exactly the same as ElectionGuard.  **(Probably significant detail to go through carefully.)**
+
 
 **Verify-inclusion**
 
@@ -342,26 +361,13 @@ If R1 is omitted, the entire history since inception until R2 is returned.  If R
 
 There is no need for a history proof because the client can compute this themselves.
 
+### Election Verification
+(VT: TODO)
+
+This will, as much as possible, match ElectionGuard's election verification, consisting of checking all the decryption proofs, vote aggregations, etc.
+
 **Verify-crypto**
-
-Check all the decryption proofs, vote aggregations, etc.
-
-
-
-## Verification data structures
-
-### Inclusion verification
-
-**(See Eleanor's Rustdocs)**
-
-An inclusion proof is a list of hashes (and some metadata). The verifier checks that re-doing the tree construction using those hashes and its input, produces the expected root hash.  
-
-**(VT: add history)**
-
-### BB verification
-
-The verification that the tallies are a valid decryption of the votes on the BB should be exactly the same as ElectionGuard.  **(Probably significant detail to go through carefully.)**
-
+TODO
 
 
 ## Details and other questions
