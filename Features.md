@@ -75,9 +75,11 @@ answer it privately by DM
 :   generally for private questions only of interest to the individual
     who asked (see [Direct Messages](https://righttoaskorg.github.io/righttoask-docs/DMs));
 
-Reject / disavow / re-tag the question
+Reject / disavow / add beter tag the question
 
 :   if the question should be asked elsewhere.
+:   if the question is irrelevent or inappropriate.
+:   the reject question will be "archived" instead of deleted.
 
 MPs generally told us that they would value---and respond to---questions
 only if they
@@ -162,6 +164,7 @@ be an MP, organisation or other citizen) or *filter* by question
 metadata such as tags and answer status. Every MP, committee and inquiry
 has standardised tags. MPs and citizens may also generate their own
 tags.
+
 
 Questions can be **sorted**
 
