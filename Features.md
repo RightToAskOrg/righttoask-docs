@@ -75,7 +75,7 @@ answer it privately by DM
 :   generally for private questions only of interest to the individual
     who asked (see [Direct Messages](https://righttoaskorg.github.io/righttoask-docs/DMs));
 
-Reject / disavow / add beter tag the question
+Reject / disavow / add beter tag to the question
 
 :   if the question should be asked elsewhere.
 :   if the question is irrelevent or inappropriate.
