@@ -156,6 +156,8 @@ likely to have influence.
     question. Maybe direct it to someone else? Maybe just let it expire?
     Maybe write a short message explaining why you're not answering?*
 
+-   *Question: How should the helpful re-tagging by other citizens work? Ans: When you write a question, you decide whether it is available for open re-tagging or not.  If yes, others can add tags (maybe up to some predermined limit); if 'ask me' then others can suggest but the original question-asker has to approve them; if no, then no further tags can be added.  Examples: you may wish to direct a question to one entity only, not wanting to accept answers from others. Alternatively, you may welcome direction and not be certain where the question should go.  This may also help distinguish local from general issues, e.g. if multiple people ask their MP the same question - when is it a repeat of a national/state issue vs when is it separate local issues with similar text. 
+
 ## Accounts and roles
 
 Organisations may also have accounts. These have the privileges of
