@@ -238,6 +238,8 @@ The merge rules for each field are:
 - Answer_accepted: May be changed from false to true.
 - Hansard link, Keywords, Topics: Same as Question_Askers, Question_Answerers.
 
+(VT: Consider exactly how this will be stored on the server or BB - a question that has been updated multiple times, e.g. by adding some background, an answer, or a hansard link, may have multiple different BB records.  It will be the server's job to keep track of all this.  TODO: update the inclusion proofs appropriately - an inclusion proof for one question may actually be an inclusion proof for multiple additions/edits, each represented separately on the BB.)
+
 **New Registration**
 
 D includes:
