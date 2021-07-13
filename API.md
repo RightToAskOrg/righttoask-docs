@@ -68,7 +68,7 @@ So a database record for a question will be:
 
 - H(Q): index/hash
 - Q: Question
-- Question_Suggester: ID
+- Person_Suggested_Question: ID
 - .... [Insert other data here: date, links, expl, tags, etc...]
 - Signature (see above).
 
@@ -83,16 +83,18 @@ The permission and validity rules for each field are:
 - Question_Text: string
     * Validity: character length
     * Permission: must be from the question-suggester
-- Question_Suggester: Entity
+    * compulsory
+- Person_Suggested_Question: Entity
     * Validity: must be a system user.
     * Permission: n/a 
+    * compulsory
 - Background: string
     * Validity: character length
     * Permission: must be from the question-suggester
-- Question_Askers: List(Entity)
+- MP_Who_Should_Ask_The_Questions: List(Entity)
     * Validity: must be MPs.  
     * Permission: n/a
-- Question_Answerers: List(Entity)
+- Entity_Who_Should_Answer_The_Question: List(Entity)
     * Validity: must be MPs, depts/portfolios, or public authorities
     * Permission: n/a
 - Answer: List(string, answerer)
@@ -107,11 +109,12 @@ The permission and validity rules for each field are:
 - Keywords: List(String)
     * Validity: short list of short words
     * Permission: n/a
-- Topics: List(Topics)
+- Category: List(Topics)
     * Validity: short list of pre-loaded topics
     * Permission: n/a
 - Signature: Sig
-    * Must be a valid sig on all uploaded data with Question_Suggester's key.
+    * Must be a valid sig on all uploaded data with Person_Suggested_Question's key.
+    * compulsory
 
 Not clear whether we need keywords or topics.
 
@@ -122,8 +125,30 @@ Also the neccessity to write a valid sig on your message is universal.  In this 
 
 ### Ballot
 
-We will use the same ballot data structure as ElectionGuard.  (VT: Note, these have changed - get updates.) Something like this: @"{""ballot_style"":""ballot-style-1"",""contests"":[{""ballot_selections"":[{""object_id"":""contest-1-yes-selection-id"",""vote"":1},{""object_id"":""contest-1-no-selection-id"",""vote"":0}],""object_id"":""contest-1-id""},{""ballot_selections"":[{""object_id"":""contest-2-selection-1-id"",""vote"":1},{""object_id"":""contest-2-selection-2-id"",""vote"":0}],""object_id"":""contest-2-id""}],""object_id"":""ballot-id-123""}"; ;
+We will use the same ballot data structure as ElectionGuard.  (VT: Note, these have changed - get updates.) Something like this:
 
+```javascript
+ballot = {
+    ballot_style: "ballot-style-1", 
+    contests:
+        [
+            {
+                object_id: "contest-1-id"
+                ballot_selections:
+                    [
+                        {
+                            object_id: "contest-1-yes-selection-id",
+                            vote: 1
+                        },
+                        {
+                            object_id: "contest-1-no-selection-id",
+                            vote:0
+                        }
+                    ],
+            }
+        ]
+}
+```
 
 **VT: the following are very negotiable, with the clear intention of making sure EG compatibility is easy, esp including John Caron's verifier**
 
@@ -154,14 +179,15 @@ Again, this is hashed, stored in the database, and posted on the BB.
 
 A registration record is:
 
+TODO: define the data structure for state (state, state electorate, federal electorate)
+
 - A username,
 - a public key,
-- boolean: Is_MP,
-- boolean: Is_Org,
+- enumeration: Is_MP, Is_Org, Is_Public,
 - (optionally) state or federal electorate(s),
-- (optionally) email domain (e.g. parliament.vic.gov.au or acf.org.au)
+- (Org or MP only) email domain (e.g. parliament.vic.gov.au or acf.org.au)
 
-Again, this is hashed, stored in the database, and posted on the BB.
+Again, this is hashed, stored in the database, and posted on the BB. Everything is public.
 
 (VT: Consider what should happen when someone wants to register several different keys from different devices, or different people who represent the same MP.)
 
@@ -209,7 +235,7 @@ The server applies question's [validity and permission rules](#question_def) (wh
 
 (VT: Consider exactly how perfectly equal a duplicate should need to be in order to be automatically excluded.  I think the same Question_Text except whitespace, and the same other data. In particular, even an identical question with different background should probably be allowed.)
 
-M is empty if the user has not opted in to sharing their address with their MP, or if they have not tagged their MP as either a Question_Asker or Question_Answerer. Otherwise, M contains a list of ciphertexts containing the person's address, encrypted with the public encryption keys of each tagged MP.
+M is empty if the user has not opted in to sharing their address with their MP, or if they have not tagged their MP as either a MP_Who_Should_Ask_The_Question or Question_Answerer. Otherwise, M contains a list of ciphertexts containing the person's address, encrypted with the public encryption keys of each tagged MP.
 
 (VT: TODO: resolve inconsistencies with registration data structures - atm we don't have public encryption keys, just digital sig keys, but we'll need them for this feature. Need to think/ask about multiple public keys for staffers associated with one MP.)
 
@@ -233,12 +259,12 @@ The server applies question's [validity and permission rules](#question_def) (wh
 Simultaneous update rules:
 
 The merge rules for each field are:
-- Question_Text, Question_Suggester, Signature: Reject updates.
+- Question_Text, Person_Suggested_Question, Signature: Reject updates.
 - Background: Reject updates unless currently blank.
-- Question_Askers, Question_Answerers: Eliminate duplicates (including with values already present). If the total number of values doesn't exceed the limit, accept. If the limit has already been exceeded, reject. If it hasn't, but would if this update was accepted, send a merge request back to the client (pick at most m out of the n you tried to submit...).  Note that this might cause cascading merges that need to be manually resolved, but that's less trouble than allowing locks.
+- MP_Who_Should_Ask_The_Questions, Entity_Who_Should_Answer_The_Question: Eliminate duplicates (including with values already present). If the total number of values doesn't exceed the limit, accept. If the limit has already been exceeded, reject. If it hasn't, but would if this update was accepted, send a merge request back to the client (pick at most m out of the n you tried to submit...).  Note that this might cause cascading merges that need to be manually resolved, but that's less trouble than allowing locks.
 - Answer: If there are simultaneous valid \& permitted updates, accept both (append), regardless of whether the MP is the person who was tagged.
 - Answer_accepted: May be changed from false to true.
-- Hansard link, Keywords, Topics: Same as Question_Askers, Question_Answerers.
+- Hansard link, Keywords, Topics: Same as MP_Who_Should_Ask_The_Questions, Entity_Who_Should_Answer_The_Question.
 
 (VT: Consider exactly how this will be stored on the server or BB - a question that has been updated multiple times, e.g. by adding some background, an answer, or a hansard link, may have multiple different BB records.  It will be the server's job to keep track of all this.  TODO: update the inclusion proofs appropriately - an inclusion proof for one question may actually be an inclusion proof for multiple additions/edits, each represented separately on the BB.)
 
