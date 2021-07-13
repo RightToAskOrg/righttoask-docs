@@ -8,6 +8,8 @@
 * [Prototype](https://righttoaskorg.github.io/righttoask-docs/Prototype)
 * [API](https://righttoaskorg.github.io/righttoask-docs/API)
 
+
+
 # Server API sketch
 
 This file sketches the main ideas for a REST API for client-server interaction.  The key idea is to separate the data upload step from the inclusion-verification step.
