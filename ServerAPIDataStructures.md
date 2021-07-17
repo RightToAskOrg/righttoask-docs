@@ -7,3 +7,6 @@
 * [Discussion and further questions](https://righttoaskorg.github.io/righttoask-docs/DiscussionAndFurtherQuestions)
 * [Prototype](https://righttoaskorg.github.io/righttoask-docs/Prototype)
 * [API](https://righttoaskorg.github.io/righttoask-docs/API)
+
+# Server API Data Structures
+
