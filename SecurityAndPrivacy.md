@@ -1,4 +1,4 @@
-## Table of content
+## Table of contentss
 * [Index](https://righttoaskorg.github.io/righttoask-docs/index)
 * [Features](https://righttoaskorg.github.io/righttoask-docs/Features)
 * [Screens and Usage](https://righttoaskorg.github.io/righttoask-docs/ScreensAndUsage)
