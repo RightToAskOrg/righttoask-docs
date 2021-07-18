@@ -8,7 +8,7 @@
 * [Prototype](https://righttoaskorg.github.io/righttoask-docs/Prototype)
 * [API](https://righttoaskorg.github.io/righttoask-docs/API)
 
-# Index
+# Right To Ask
 
 Parliament is meant to represent the people, but it does not always work
 as well as it should. Citizens want more input into the functions of

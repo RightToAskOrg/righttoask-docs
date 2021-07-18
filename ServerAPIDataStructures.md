@@ -1,4 +1,4 @@
-## Table of contentss
+## Table of contents
 * [Index](https://righttoaskorg.github.io/righttoask-docs/index)
 * [Features](https://righttoaskorg.github.io/righttoask-docs/Features)
 * [Screens and Usage](https://righttoaskorg.github.io/righttoask-docs/ScreensAndUsage)
@@ -52,10 +52,7 @@ Defining fields:
     - Permission: n/a
     - compulsory
 
-Other fields:
-- Question-Id = H(Question_Text, Question_Writer, Sig)
-
-(** TODO: Check that this definition of question-id is consistent with ElectionGuard's contest-id, which is a hash of some election data.) 
+Non-defining fields:
 
 - Background: string
     * Validity: character length
@@ -81,8 +78,13 @@ Other fields:
 - Category: List(Topics)
     * Validity: short list of pre-loaded topics
     * Permission: n/a
+
+Bookkeeping fields:
+
+- Question-Id = H(Question_Text, Question_Writer, Expiry_Date)
 - Last_Update: BB_Index
 
+(** TODO: Check that this definition of question-id is consistent with ElectionGuard's contest-id, which is a hash of some election data.) 
 
 The idea is that the BB_Index provides a link to the most recent update on the BB, which includes a signature and also a link to the prior most recent update. Thus anyone who wants to verify can iteratively retrieve all the updates on this question, at each step verifying the relevant signature, and then check that the composition of the updates matches the current announced state.
 
@@ -148,18 +150,41 @@ A tally is:
 
 Again, this is hashed, stored in the database, and posted on the BB.
 
-### Registration
+### Entity
 
-A registration record is:
+An entity is either a public authority (see RightToKnow list), or a user of the system.
 
-TODO: define the data structure for state (state, state electorate, federal electorate)
+Defining Fields:
 
-- A username,
-- a public key,
-- enumeration: Is_MP, Is_Org, Is_Public,
-- (optionally) state or federal electorate(s),
-- (Org or MP only) email domain (e.g. parliament.vic.gov.au or acf.org.au)
+- Username : string
+    * Validity: character length
+    * Permission: must be unique
+    * compulsory
 
-Again, this is hashed, stored in the database, and posted on the BB. Everything is public.
+Non-defining fields
+
+- Entity_Type: enumeration: Is_MP, Is_Org, Is_Citizen, Is_PublicAuthority
+    * compulsory
+- Public key : key
+    * Validity: TBD
+    * Permission: n/a
+    * optional
+- State or federal electorate(s),
+    * optional
+- Email domain (e.g. parliament.vic.gov.au or acf.org.au)
+    * compulsory for (Org or MPs) ; optional for other accounts
+    
+Bookkeeping fields:
+
+- Entity-Id = H(Username)
+
+The username is hashed, stored in the database, and posted on the BB. Everything is public.
+
+Note: Entity_Type is not part of the defining fields, because a person could become, or cease to be, an MP.
+
+
+(TODO: define the data structure for state (state, state electorate, federal electorate)
+
+(VT: Consider what MPs who haven't registered yet are - are they non-user entities?  In which case, what exactly should happen when they register?)
 
 (VT: Consider what should happen when someone wants to register several different keys from different devices, or different people who represent the same MP.)

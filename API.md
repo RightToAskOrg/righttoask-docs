@@ -1,4 +1,4 @@
-## Table of contentss
+## Table of contents
 * [Index](https://righttoaskorg.github.io/righttoask-docs/index)
 * [Features](https://righttoaskorg.github.io/righttoask-docs/Features)
 * [Screens and Usage](https://righttoaskorg.github.io/righttoask-docs/ScreensAndUsage)
@@ -43,153 +43,9 @@ For now, call them inclusionProof and historyProof.  These proofs work only on h
 
 The main functionality of the rightToAsk client-server interaction is to post questions (and links, tags, or answers) or encrypted votes, and read others' questions and the decrypted tallies. A secondary function is to post and read public keys, for signing and verification of the uploaded data.  (At a later time, we may add public encryption keys for direct messages.) We also add verification of the BB state. 
 
-(VT Note/TODO: Be consistent about whether a question or other data item is referred to by the hash of its data or the hash of its (data || sig).  (1) Consistency with Election Guard would be good, but (2) ease-of-use of BB would be good, which favours hashing (item+sig).  OTOH, if there are some items without sigs it might be annoying/complicated.)
+(VT Note/TODO: Be consistent about whether a question or other data item is referred to by the hash of its data or the hash of its (data || sig).  (1) Consistency with Election Guard would be good, but (2) ease-of-use of BB would be good, which favours hashing (item+sig).  OTOH, if there are some items without sigs it might be annoying/complicated. Decision: H(data), no sig.)
 
-## Main Data structures
-
-**Questions: So far this completely omits data structures for key generation - TBA.  **
-
-### Election Transcript
-The election transcript consists of everything worth verifying:
-
-- **Questions** including answers, directions, etc.
-- **Ballots** which contain encrypted votes on questions
-- **Tallies** i.e. decrypted aggregated votes on questions
-- **Registrations** including a public key and name  
-
-An **Entity** is either a department/ministerial portfolio (preloaded), a public authority (also preloaded, prob from RightToKnow), or a system user (an MP, registered citizen, or registered org rep). 
-
-<a id="question_def"/>
-### Question 
-
-The contest-id=H(Q) will become the database index for that question, to which the rest of the database record is attached.
-
-So a database record for a question will be:
-
-- H(Q): index/hash
-- Q: Question
-- Person_Suggested_Question: ID
-- .... [Insert other data here: date, links, expl, tags, etc...]
-- Signature (see above).
-
-H(Q) is inserted into the Merkle tree / BB.
-
-Validity: 
-
-Compulsory fields: Question_Text, question-suggester, sig. Others, including lists, may be blank.
-
-The permission and validity rules for each field are:
-
-- Question_Text: string
-    * Validity: character length
-    * Permission: must be from the question-suggester
-    * compulsory
-- Person_Suggested_Question: Entity
-    * Validity: must be a system user.
-    * Permission: n/a 
-    * compulsory
-- Background: string
-    * Validity: character length
-    * Permission: must be from the question-suggester
-- MP_Who_Should_Ask_The_Questions: List(Entity)
-    * Validity: must be MPs.  
-    * Permission: n/a
-- Entity_Who_Should_Answer_The_Question: List(Entity)
-    * Validity: must be MPs, depts/portfolios, or public authorities
-    * Permission: n/a
-- Answer: List(string, answerer)
-    * Validity: character length; answerer must match the sig.
-    * Permission: must be from an MP 
-- Answer_accepted: bool (default false)
-    * Validity: n/a
-    * Permission: must be from the question-suggester
-- Hansard link: List(url)
-    * Validity: domain must be aph.gov.au, parliament.vic.gov.au, etc. (preloaded permit-list - note that url sanitation is nontrivial).
-    * Permissions: n/a
-- Keywords: List(String)
-    * Validity: short list of short words
-    * Permission: n/a
-- Category: List(Topics)
-    * Validity: short list of pre-loaded topics
-    * Permission: n/a
-- Signature: Sig
-    * Must be a valid sig on all uploaded data with Person_Suggested_Question's key.
-    * compulsory
-
-Not clear whether we need keywords or topics.
-
-(**VT: I would like a nice way to express the simple idea that you can change the 'answer accepted' bool from false to true, but not vice versa, and that this is an append-only-style operation, i.e. an 'or only' operation. Not sure of the most elegant way to express this.)
-
-Also the neccessity to write a valid sig on your message is universal.  In this case the person uploading is supposed to put their name to a specific part of the data structure, so that requirement (which is usually ephemeral) imposes this permanent notion of validity on the database.
-
-
-### Ballot
-
-We will use the same ballot data structure as ElectionGuard.  (VT: Note, these have changed - get updates.) Something like this:
-
-```javascript
-ballot = {
-    ballot_style: "ballot-style-1", 
-    contests:
-        [
-            {
-                object_id: "contest-1-id"
-                ballot_selections:
-                    [
-                        {
-                            object_id: "contest-1-yes-selection-id",
-                            vote: 1
-                        },
-                        {
-                            object_id: "contest-1-no-selection-id",
-                            vote:0
-                        }
-                    ],
-            }
-        ]
-}
-```
-
-**VT: the following are very negotiable, with the clear intention of making sure EG compatibility is easy, esp including John Caron's verifier**
-
-The **contest-id** should be a hash of the question - H(Q).  We will only ever have two selections: up and down.  The selection IDs can therefore be very simply encoded using only one more bit (or perhaps an 'up' or 'down' string if that seems helpful). The hash should (perhaps) include the date, but should _not_ include other data such as links and tags, because these can change after the question is posted.
-
-We won't need an explicit 'abstain' option - we'll be able to tally the upvotes and the downvotes (regardless of whether they are an explicit downvote or a swipe-aside).  Then it will be immediately evident how many votes there were with two zeros, since the overall total votes will be obvious.
-
-**Question / thing to check: Can EG and/or JC's verifier aggregate some, but not necessarily all, contests on a ballot? And can it aggregate some, but not all, of the votes already received?** I assume the answer must be yes, because many US jurisdictions give slightly different ballots to different voters according to different addresses, but we may have an extreme version because each participant might vote on a completely different subset of questions. I think this effectively means each participant makes up their own "ballot-style."
-
-We'll want to be able to take a _contest_ and choose to aggregate and decrypt 
-its votes, which may be spread across a lot of different positions on a lot of different ballots.
-
-Every submitted ballot is signed.  The hash of the ballot and its signature, H(B | Sig) is inserted in the Merkle Tree / BB.
-
-
-
-### Tallies
-
-A tally is:
-
-- A claimed total,
-- Decryption proofs from each trustee,
-- A clear statement of which votes were aggregated.  (**Check how EG does this - or does it assume that you always want to decrypt everything?)
-
-Again, this is hashed, stored in the database, and posted on the BB.
-
-### Registration
-
-A registration record is:
-
-TODO: define the data structure for state (state, state electorate, federal electorate)
-
-- A username,
-- a public key,
-- enumeration: Is_MP, Is_Org, Is_Public,
-- (optionally) state or federal electorate(s),
-- (Org or MP only) email domain (e.g. parliament.vic.gov.au or acf.org.au)
-
-Again, this is hashed, stored in the database, and posted on the BB. Everything is public.
-
-(VT: Consider what should happen when someone wants to register several different keys from different devices, or different people who represent the same MP.)
+First read the [Main Data structures](https://righttoaskorg.github.io/righttoask-docs/ServerAPIDataStructures).
 
 ## Post functions
 
@@ -217,11 +73,9 @@ At this point, the data should appear in BB.get_pending_hash_values.
 
 The exact requirements for the data obviously depend on the specific kind of message. For registration, data would include a name, public key and (optionally) electorate.  For voting, data would include vote ciphertexts with sufficient extra data to identify which questions they were answering.  For question-asking, the data is quite complex and would include the text of the question, the ID of the person asking, any tags or links, etc.  We will also add some more functionality for answering questions, marking them as answered, re-tagging them for other MPs, etc...
 
-### Specific POST functions
+### New Question
 
-**New Question**
-
-- D =  Question - see above.
+- D =  Question
 - M =  List(Enc(address, MP public key))
 
 Responses: 
@@ -233,24 +87,27 @@ Responses:
 
 The server applies question's [validity and permission rules](#question_def) (which should also be checked by the client). 
 
-(VT: Consider exactly how perfectly equal a duplicate should need to be in order to be automatically excluded.  I think the same Question_Text except whitespace, and the same other data. In particular, even an identical question with different background should probably be allowed.)
+(VT: Consider exactly how perfectly equal a duplicate should need to be in order to be automatically excluded.  I think the same Question_Text except whitespace, and the same other data. In particular, even an identical question with different background should probably be allowed. Update: this is determined by the Defining Fields - two questions are duplicates iff they  have the same defining fields.)
 
-M is empty if the user has not opted in to sharing their address with their MP, or if they have not tagged their MP as either a MP_Who_Should_Ask_The_Question or Question_Answerer. Otherwise, M contains a list of ciphertexts containing the person's address, encrypted with the public encryption keys of each tagged MP.
+M is empty if the user has not opted in to sharing their address with their MP, or if they have not tagged their MP as either a MP_Who_Should_Ask_The_Question or Question_Answerer. Otherwise, M contains a list of ciphertexts containing the person's address, encrypted with the public encryption keys of each tagged MP.  (VT: Ask whether this is a useful enough feature for the bother. I suspect not, in which case M is empty.)
 
-(VT: TODO: resolve inconsistencies with registration data structures - atm we don't have public encryption keys, just digital sig keys, but we'll need them for this feature. Need to think/ask about multiple public keys for staffers associated with one MP.)
+(VT: TODO: resolve inconsistencies with registration data structures - atm we don't have public encryption keys, just digital sig keys, but we'll need them for the DM feature. Need to think/ask about multiple public keys for staffers associated with one MP.)
 
-**Edit Question**
+### Edit Question
 
 D includes:
 
-- h: the hash used to identify the question, 
-- Edits: a list of (field, value) pairs, where the field is an element of the [question data structure](**link) and the value is an update to be appended to the existing value. 
+- Question_Id: the hash used to identify the question, 
+- Last_Update: the hash used to identify the last update.
+- Edits: a list of (field, value) pairs, where the field is an element of the [question data structure](https://righttoaskorg.github.io/righttoask-docs/ServerAPIDataStructures) and the value is an update to be appended to the existing value. 
 
 Responses: 
 
-- Success (hash of D + server sig), 
+- Success: Question_Id, New_Last_Update, 
 - Auth Failure (you're not permitted to do this update, which may be either because you don't have permission to update that field, or there are already too many answers of that kind), 
 - Merge failure (you need to manually resolve X - for example, if two people have simultaneously updated a field that can only have one element).
+
+All responses are signed by the server.
 
 The server applies question's [validity and permission rules](#question_def) (which should also be checked by the client). 
 
@@ -259,6 +116,7 @@ The server applies question's [validity and permission rules](#question_def) (wh
 Simultaneous update rules:
 
 The merge rules for each field are:
+
 - Question_Text, Person_Suggested_Question, Signature: Reject updates.
 - Background: Reject updates unless currently blank.
 - MP_Who_Should_Ask_The_Questions, Entity_Who_Should_Answer_The_Question: Eliminate duplicates (including with values already present). If the total number of values doesn't exceed the limit, accept. If the limit has already been exceeded, reject. If it hasn't, but would if this update was accepted, send a merge request back to the client (pick at most m out of the n you tried to submit...).  Note that this might cause cascading merges that need to be manually resolved, but that's less trouble than allowing locks.
@@ -266,9 +124,14 @@ The merge rules for each field are:
 - Answer_accepted: May be changed from false to true.
 - Hansard link, Keywords, Topics: Same as MP_Who_Should_Ask_The_Questions, Entity_Who_Should_Answer_The_Question.
 
-(VT: Consider exactly how this will be stored on the server or BB - a question that has been updated multiple times, e.g. by adding some background, an answer, or a hansard link, may have multiple different BB records.  It will be the server's job to keep track of all this.  TODO: update the inclusion proofs appropriately - an inclusion proof for one question may actually be an inclusion proof for multiple additions/edits, each represented separately on the BB.)
+** Server Design **
+A question that has been updated multiple times, e.g. by adding some background, an answer, or a hansard link, may have multiple different BB records.  It will be the server's job to keep track of all this.  Each Edit contains a Last_Update field, which points to the previous most-recent update for this question.  The server will store both the Question_Id (hashcode) and the Last_Update (hashcode), along with the aggregated current state of the Question. 
 
-**New Registration**
+The Last_Update points to the most recent edit, which in turn points to the next-most-recent, etc, allowing the server iteratively to retrieve an inclusion proof for the complete question (initial post plus updates).
+
+(TODO: update the inclusion proofs appropriately - an inclusion proof for one question may actually be an inclusion proof for multiple additions/edits, each represented separately on the BB.)
+
+### New Registration
 
 D includes:
 
@@ -281,7 +144,9 @@ M includes:
 
 - (optional) email name
 
-**Edit Registration**
+(TODO: update registrations for better structure in ServerAPIDataStructures.)
+
+### Edit Registration
 
 ## Query functions
 
