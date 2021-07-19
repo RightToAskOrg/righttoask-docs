@@ -91,8 +91,6 @@ The idea is that the BB_Index provides a link to the most recent update on the B
 
 TODO: Think about whether signatures are a function of the underlying data structure, or of a particular update. Should a sig by the question-writer be a defining field of the initial question upload? Answer: a signature is a part of a BB upload, not an (explicit) part of the question.
 
-TODO: Not clear whether we need keywords or topics.
-
 (**VT: I would like a nice way to express the simple idea that you can change the 'answer accepted' bool from false to true, but not vice versa, and that this is an append-only-style operation, i.e. an 'or only' operation. Not sure of the most elegant way to express this.)
 
 Also the neccessity to write a valid sig on your message is universal.  In this case the person uploading is supposed to put their name to a specific part of the data structure, so that requirement (which is usually ephemeral) imposes this permanent notion of validity on the database.
