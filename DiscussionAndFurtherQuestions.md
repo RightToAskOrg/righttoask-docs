@@ -1,5 +1,5 @@
 ---
-title: FAQ 
+title: discussion 
 ---
 
 <a href="https://hackmd.io/peCERzhcRm-2HUtOGlgvRQ">
@@ -122,3 +122,8 @@ We also considered allowing people to register as interested in certain issues, 
 
 **Q:** should clicking on a tag associated with a committee or inquiry take you to that committee/inquiry homepage? Probably. Perhaps within the app so you can easily go back.
 
+**Q:** Do we have to do anything as complicated as Signal-style ratcheting, or can we simply use one-pass ECDH?* 
+
+**Q:** Maybe MPs should only accept DMs from verified accounts?
+
+**Q:** Perhaps we should just use PGP?
