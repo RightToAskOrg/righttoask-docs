@@ -113,8 +113,9 @@ The aim is to give MPs a succinct, clear list of most-popular questions,
 rather than a deluge of thousands of emails which may be individually
 considered or copy-pasted, and take time to assess.
 
-We avoid AI and the consequent risks of algorithmic bias. Citizens do
-the work of aggregating opinions and assessing others' suggestions, thus
+Citizens do
+the work of aggregating opinions and assessing others' questions. There is some natural language processing for keyword searches and to present possibly-duplicate questions to citizens before they upload a new one.
+We use AI only to suggest things to human users, not to make the decision.  This certainly does not remove the risk of algorithmic bias, but we hope it reduces it a little. Final decisions on what to write, whether another question is equivalent, and what to vote for, rest with humans, thus
 providing a more trustworthy way of directing the most important
 questions to MPs (although, of course, people can be biased too).
 
