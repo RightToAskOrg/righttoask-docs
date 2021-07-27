@@ -101,4 +101,14 @@ There are also a number of ways we could offer rewards to those who suggested po
 
 State and federal electoral commissions and parliaments have online features for helping citizens find their electorate and representatives. However, these can be challenging to navigate for people who are not already familiar with how Australia's political systems work.  RightToAsk provides an accessible way for citizens to look up their representatives, at the time they register. They are asked (optionally) for a postcode, which is then used to assess who their representatives are. They are then asked if they would like to follow their state and federal representatives.
 
+## Possible extra feature: Direct Messages
+
+The system will use its PKI for end-to-end encrypted Direct messages
+(DMs).
+
+Default behaviour: an MP can reply (by DM) to any message tagged for
+them; a citizen can reply (by DM) to any DM. Of course, these defaults
+can be edited to allow more or less receptive DM behaviour.
+
+
 [^1]: The Hansard is the report of the proceedings of the Australian parliament and its committees. This includes the Senate, House of Representatives, the Federation Chamber and all parliamentary committees. <https://www.aph.gov.au/parliamentary_business/hansard>
