@@ -1,28 +1,23 @@
-## Table of contents
-* [Index](https://righttoaskorg.github.io/righttoask-docs/index)
-* [Features](https://righttoaskorg.github.io/righttoask-docs/Features)
-* [Screens and Usage](https://righttoaskorg.github.io/righttoask-docs/ScreensAndUsage)
-* [Security and privacy](https://righttoaskorg.github.io/righttoask-docs/SecurityAndPrivacy)
-* [Direct messaging](https://righttoaskorg.github.io/righttoask-docs/DMs)
-* [Discussion and further questions](https://righttoaskorg.github.io/righttoask-docs/DiscussionAndFurtherQuestions)
-* [Prototype](https://righttoaskorg.github.io/righttoask-docs/Prototype)
-* [API](https://righttoaskorg.github.io/righttoask-docs/API)
+---
+title: contact us
+---
 
-# Possible extra feature: Direct Messages {#sec:DMs}
+<a href="https://hackmd.io/peCERzhcRm-2HUtOGlgvRQ">
+<div style="display: flex; align-items: flex-end; width=100%; background-color: #bb9cdb; justify-content: space-between">
+    <img style="margin-left: 20px; height:80px" src="https://i.imgur.com/zbzGAzJ.png" />
+    <p style="font: normal small-caps 900 16px sans-serif; color: white">
+    Influence without Surveillance
+    </p>
+    <div style="clear:both;"></div>
+</div>
+</a>
 
-The system will use its PKI for end-to-end encrypted Direct messages
-(DMs).
+## Welcome
 
-Default behaviour: an MP can reply (by DM) to any message tagged for
-them; a citizen can reply (by DM) to any DM. Of course, these defaults
-can be edited to allow more or less receptive DM behaviour.
+If you're new to open source, you might like to read [this guide to getting started](https://www.digitalocean.com/community/tutorial_series/an-introduction-to-open-source).
 
-*Question: Do we have to do anything as complicated as Signal-style
-ratcheting, or can we simply use one-pass ECDH?* 
+## Team
 
-*Question: Maybe MPs should only accept DMs from verified accounts?*
+So far, we've had valuable contributions from [Andrew Conway](), [Ishan Goyal](https://github.com/Ishan27g), [Kipling](https://github.com/KipCrossing), [Chuanyuan Liu](https://github.com/ChuanyuanLiu), [Eleanor McMurtry](https://github.com/eleanor-em), [Lillian McCann](https://github.com/lillimc), [Hanna Navissi](https://github.com/hannanavissi), [Pedro Rosas](https://www.linkedin.com/in/pedro-rosas-ux) and [Miguel Wood](https://www.linkedin.com/in/migster/). The team is organised by Vanessa Teague - email me if you'd like to join, or add your comments to the [Discussions](https://github.com/RightToAskOrg/righttoask-docs/discussions).
 
-*Question: Perhaps we should just use PGP?*
-
-|:----------------|---------------:|
-| [Back: Security and Privacy](https://righttoaskorg.github.io/righttoask-docs/SecurityAndPrivacy)| |[Next: Further Questions](https://righttoaskorg.github.io/righttoask-docs/DiscussionAndFurtherQuestions) 
+![](https://i.imgur.com/muuW4ON.jpg)
