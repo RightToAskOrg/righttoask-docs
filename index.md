@@ -25,7 +25,7 @@ represent them.
 which could be:
 
 -   *directed to* an MP to ask for an answer, or
--   *suggested for* an MP to ask someone else.
+-   *suggested for* an MP to raise in Parliament.
 
 *RightToAsk* shows parliamentarians which questions are popular
 and relevant to their role. It is *informative*, making 
@@ -50,17 +50,17 @@ their priorities, they can suggest a new one. MPs, too, can easily
 search for questions directed at them or topics of interest and see
 a short, aggregated list of relevant and popular questions.
 
-*RightToAsk* does not attempt to hide who suggested which 
-questions---this is partly to disincentivise aggressive or 
-threatening ones.
-
-The risk of profiling and manipulation is both a vulnerability in 
+Votes are private, even from us. The risk of profiling and manipulation is both a vulnerability in 
 our democracy and a disincentive for participation. RightToAsk uses 
 additive-homomorphic encryption to add votes without revealing how
 individuals voted. It thus defeats political profiling and 
 tracking, rather like an electronic equivalent of putting 
 everyone's vote into a ballot box and counting them only when their 
 link with the voter has been broken.
+
+However, *RightToAsk* does not attempt to hide who suggested which 
+questions---this is partly to disincentivise aggressive or threatening ones, and partly to encourage connections between MPs and people who ask good questions.
+
 
 ## Example scenarios
 
@@ -87,15 +87,11 @@ in Parliament.[^2]
 Journalists
 
 : and anyone else can adopt the questions for use in press conferences or any other setting.
-We step away from the notion of 'voting on decisions' towards raising
-awareness and asking questions about issues that seemed important to
-lots of people. In particular, we do not work hard to distinguish
-something with 51% support from something with 49% support - instead, we
-try to raise up several issues, in the form of questions, that a large
-number of people care about.
+
+
 
 : Each MP's contribution and responses will be public, both the number of
-questions they have asked in parliament (as suggested by the platform)
+questions they have raised in parliament (as suggested by the platform)
 and the number they have answered. The idea is to incentivise
 participation by rewarding active participants with a public show of how
 well they are doing their job of responding to the wishes of the
@@ -109,9 +105,19 @@ for feedback.
 The primary goal is *meaningful information flow* from citizens to MPs.
 This should be valuable and efficient at both ends.
 
+We step away from the notion of 'voting on decisions' towards raising
+awareness and asking questions about issues that seemed important to
+lots of people. In particular, we do not work hard to distinguish
+something with 51% support from something with 49% support - instead, we
+try to raise up several issues, in the form of questions, that a large
+number of people care about.
+
+
 The aim is to give MPs a succinct, clear list of most-popular questions,
 rather than a deluge of thousands of emails which may be individually
 considered or copy-pasted, and take time to assess.
+
+
 
 Citizens do
 the work of aggregating opinions and assessing others' questions. There is some natural language processing for keyword searches and to present possibly-duplicate questions to citizens before they upload a new one.
