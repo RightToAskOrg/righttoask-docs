@@ -15,25 +15,28 @@ title: features
 ## Features for citizens
 
 Ask a question
-: Direct a question to a particular MP or committee
+: Direct a question to a particular MP or committee.  Tell them who should have to answer
 
-Tag a question with a topic or keyword
-: Add an explanation or background link
+
+***Upvote or flick past a question***
+
+Add metadata to an existing question
+: Add an explanation or background link,
 e.g. to a bill or explanatory memorandum
-
-***Upvote or downvote/flick a question***
+: Add a suggestion for who should answer
+: Add a topic or keyword
 
 Attach a link to Hansard[^1]
 :   where a question was asked or answered
 
 Search questions
-:   by key word
+:   by keyword
 
 Sort questions
-:   by popularity
+:   by timing or popularity,
 
 Filter questions
-:   by electorate, answer status, tag, committee, or MP
+:   by electorate, answer status, committee, MP, etc
 
 Follow another citizen
 :   who may or may not be an MP.
@@ -42,20 +45,21 @@ Follow another citizen
 
 MPs can do everything that other citizens can do, and also respond to questions, whether those directed to them or to other MPs. There are several ways to respond to a question:
 
-Use the question
-:   by posing it to someone in a commmittee or other hearing, thus allowing a link to Hansard or the online recording to be added;
+Raise it in Parliament
+:   for example, raise it in Question Time or ask it in a commmittee or other hearing;
 
-Comment on a question
-:   or on an answer or comment from another MP;
 
 Answer a question publicly via RightToAsk,
 :   which generates a notification to the person who asked it;
 
-Ask it in a confidential parliamentary setting
+Comment on a question
+:   or on an answer or comment from another MP;
+
+Raise it in a confidential parliamentary setting
 :   and make a (public) response to say that the matter was raised in a confidential context and will be considered in the committee's final report;
 
 Answer it privately by DM
- :   generally for private questions only of interest to the individual who asked (see [Direct Messages](https://righttoaskorg.github.io/righttoask-docs/DMs));
+ :   generally for private questions only of interest to the individual who asked (see [Direct Messages](#subsec:DMs) below);
 
 Reject / disavow / re-tag the question
 :   If the question should be asked elsewhere. 
@@ -97,18 +101,26 @@ There are also a number of ways we could offer rewards to those who suggested po
 -   Notifications when other people upvote your questions.
 -   Leaderboards for people who have cast the most votes?
 
-## Civics and education features
+(\#subsec:FindMyMPs)
+## Civics and education features 
 
-State and federal electoral commissions and parliaments have online features for helping citizens find their electorate and representatives. However, these can be challenging to navigate for people who are not already familiar with how Australia's political systems work.  RightToAsk provides an accessible way for citizens to look up their representatives, at the time they register. They are asked (optionally) for a postcode, which is then used to assess who their representatives are. They are then asked if they would like to follow their state and federal representatives.
+State and federal electoral commissions and parliaments have online features for helping citizens find their electorate and representatives. However, these can be challenging to navigate for people who are not already familiar with how Australia's political systems work.  RightToAsk provides an accessible way for citizens to look up their representatives. The app then remembers their state and federal representatives.
 
-## Possible extra feature: Direct Messages
+<a id="subsec:DMs"> </a>
 
-The system will use its PKI for end-to-end encrypted Direct messages
-(DMs).
+## Possible extra feature: Direct Messages 
 
-Default behaviour: an MP can reply (by DM) to any message tagged for
-them; a citizen can reply (by DM) to any DM. Of course, these defaults
-can be edited to allow more or less receptive DM behaviour.
+Right To Ask will incorporate end-to-end encrypted direct messages so that MPs can follow up directly with citizens if needed. 
+
+Each participant can set their own policy on whether they wish to receive DMs from
+
+- nobody
+- people they have sent a DM to
+- people they follow
+- their MPs
+- (other) MPs
+- anybody
+
 
 
 [^1]: The Hansard is the report of the proceedings of the Australian parliament and its committees. This includes the Senate, House of Representatives, the Federation Chamber and all parliamentary committees. <https://www.aph.gov.au/parliamentary_business/hansard>
