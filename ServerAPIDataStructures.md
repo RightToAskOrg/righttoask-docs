@@ -1,5 +1,5 @@
 ---
-title: rightoask
+title: righttoask
 ---
 
 <a href="https://hackmd.io/peCERzhcRm-2HUtOGlgvRQ">
@@ -13,11 +13,11 @@ title: rightoask
 </a>
 
 ## Who we are and what we do
-- [Project Overview](/Fu59EsA3SRuMnRtL_MHuDw)
-- [Features and Prototype Showcase](/5j2zhQiqRAW1SLJfydu2Hg)
-- [Security and Privacy](/ttDlv_zvT-eufOUZM-LgJA)
-- [Team Page and Roadmap](/Ccdce5TaSUKxKkfTv1pL0A)
-- [FAQ](/1J16cdpJRfq761HQRpOsKA)
+- [Overview](/LdFFDGwFQmSqvAf_ZBIw7A)
+- [Features](/N2guulgPQfOz2ZMLNQ4W_g)
+- [Security and Privacy](/H4dTICR3TtC2_k26HWHH0Q)
+- [Contact us](/po53WYZgQa6989TxnJAnYw)
+- [Discussion](/GdjzfBSmRiGAonp1s0szWg)
 
 ## For Developers
 - [RighToAsk Organization at GitHub](https://github.com/RightToAskOrg)
