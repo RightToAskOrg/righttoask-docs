@@ -4,7 +4,7 @@ title: overview
 
 <a href="https://hackmd.io/peCERzhcRm-2HUtOGlgvRQ">
 <div style="display: flex; align-items: flex-end; width=100%; background-color: #649b49; justify-content: space-between">
-    <img style="margin-left: 20px; height:80px" src="https://raw.githubusercontent.com/RightToAskOrg/righttoask-docs/gh-pages/RightToAsk.png" />
+    <img style="margin-left: 20px; height:80px; background-color:white" src="https://raw.githubusercontent.com/RightToAskOrg/righttoask-docs/gh-pages/RightToAsk.png" />
     <p style="font: normal small-caps 900 16px sans-serif; color: white">
     Influence without Surveillance
     </p>
@@ -21,7 +21,7 @@ conversely, often struggle with a deluge of messages that do not
 give a clear picture of  what their constituents want or how to 
 represent them.
 
-*RightToAsk* lets citizens[^1] suggest and vote on questions,
+*RightToAsk* lets people[^1] suggest and vote on questions,
 which could be:
 
 -   *directed to* an MP to ask for an answer, or
@@ -128,6 +128,6 @@ questions to MPs (although, of course, people can be biased too).
 
 
 
-[^1]: The term "citizen" is used here to emphasise the active participation in a democratic process, though users may of course be permanent residents, under-18s or other non-Australian-citizens. The term "MP" includes senators and members of state legislative bodies.
+[^1]: Participants may be citizens, permanent residents, under-18s or (other) non-Australian-citizens. The term "MP" includes senators and members of state legislative bodies.
 
 [^2]: The Victorian Parliament has recently introduced a special session for constituent questions: <https://www.parliament.vic.gov.au/about/news/2458-constituency-questions-introduced>
