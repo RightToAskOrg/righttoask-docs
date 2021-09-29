@@ -3,8 +3,8 @@ title: overview
 ---
 
 <a href="https://hackmd.io/peCERzhcRm-2HUtOGlgvRQ">
-<div style="display: flex; align-items: flex-end; width=100%; background-color: #bb9cdb; justify-content: space-between">
-    <img style="margin-left: 20px; height:80px" src="https://i.imgur.com/zbzGAzJ.png" />
+<div style="display: flex; align-items: flex-end; width=100%; background-color: #649b49; justify-content: space-between">
+    <img style="margin-left: 20px; height:80px" src="https://raw.githubusercontent.com/RightToAskOrg/righttoask-docs/gh-pages/RightToAsk.png" />
     <p style="font: normal small-caps 900 16px sans-serif; color: white">
     Influence without Surveillance
     </p>
@@ -21,7 +21,7 @@ conversely, often struggle with a deluge of messages that do not
 give a clear picture of  what their constituents want or how to 
 represent them.
 
-*RightToAsk* lets citizens[^1] suggest and vote on questions, 
+*RightToAsk* lets citizens[^1] suggest and vote on questions,
 which could be:
 
 -   *directed to* an MP to ask for an answer, or
@@ -58,7 +58,7 @@ tracking, rather like an electronic equivalent of putting
 everyone's vote into a ballot box and counting them only when their 
 link with the voter has been broken.
 
-However, *RightToAsk* does not attempt to hide who suggested which 
+However, *RightToAsk* does not attempt to hide who wrote which 
 questions---this is partly to disincentivise aggressive or threatening ones, and partly to encourage connections between MPs and people who ask good questions.
 
 
@@ -71,7 +71,9 @@ Suppose Senate Estimates wants to examine the effectiveness of a
 recently-built government app, but doesn't understand the app or its likely failures well enough to formulate effective questions.
 Knowledgeable technical people who have been examining the app can
 suggest important questions for the committee members to pose, and
-other citizens can vote them up so they receive attention.
+other citizens can vote them up so they receive attention. 
+
+: People with important lived experience of a particular issue don't need to organise in advance to make a large impact - one person can frame a relevant question, and others with similar experiences can amplify it.
 
 MPs
 
@@ -90,9 +92,9 @@ Journalists
 
 
 
-: Each MP's contribution and responses will be public, both the number of
+: Each MP's contribution and responses will be public, both the 
 questions they have raised in parliament (as suggested by the platform)
-and the number they have answered. The idea is to incentivise
+and the ones they have answered. The idea is to incentivise
 participation by rewarding active participants with a public show of how
 well they are doing their job of responding to the wishes of the
 electorate.
@@ -106,36 +108,26 @@ The primary goal is *meaningful information flow* from citizens to MPs.
 This should be valuable and efficient at both ends.
 
 We step away from the notion of 'voting on decisions' towards raising
-awareness and asking questions about issues that seemed important to
-lots of people. In particular, we do not work hard to distinguish
+awareness and asking questions about issues that are important to
+lots of people. We do not aim to distinguish
 something with 51% support from something with 49% support - instead, we
 try to raise up several issues, in the form of questions, that a large
 number of people care about.
 
 
 The aim is to give MPs a succinct, clear list of most-popular questions,
-rather than a deluge of thousands of emails which may be individually
-considered or copy-pasted, and take time to assess.
-
-
+rather than a deluge of thousands of emails which take time to assess.
 
 Citizens do
 the work of aggregating opinions and assessing others' questions. There is some natural language processing for keyword searches and to present possibly-duplicate questions to citizens before they upload a new one.
-We use AI only to suggest things to human users, not to make the decision.  This certainly does not remove the risk of algorithmic bias, but we hope it reduces it a little. Final decisions on what to write, whether another question is equivalent, and what to vote for, rest with humans, thus
+We use AI only to suggest things to human users, not to make the decision.  This certainly does not remove the risk of algorithmic bias, but we hope it reduces it a little. 
+
+Final decisions on what to write, whether another question is equivalent, and what to vote for, rest with humans, thus
 providing a more trustworthy way of directing the most important
 questions to MPs (although, of course, people can be biased too).
 
-RightToAsk also conveys what fraction of people saw the question and
-*did not* upvote it, thus informing the MP if many people were *not*
-interested.
 
-Citizens are incentivised to participate by the satisfaction of having
-their voices heard.
-
-
-<div style="text-align: right"> <a href="https://righttoaskorg.github.io/righttoask-docs/Features">Next: Features</a> </div>
 
 [^1]: The term "citizen" is used here to emphasise the active participation in a democratic process, though users may of course be permanent residents, under-18s or other non-Australian-citizens. The term "MP" includes senators and members of state legislative bodies.
 
 [^2]: The Victorian Parliament has recently introduced a special session for constituent questions: <https://www.parliament.vic.gov.au/about/news/2458-constituency-questions-introduced>
-
