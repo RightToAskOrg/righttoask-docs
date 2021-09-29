@@ -2,7 +2,6 @@
 title: overview
 ---
 
-<a href="https://hackmd.io/peCERzhcRm-2HUtOGlgvRQ">
 <div style="display: flex; align-items: flex-end; width=100%; background-color: #649b49; justify-content: space-between">
     <img style="margin-left: 20px; height:80px; background-color:white" src="https://raw.githubusercontent.com/RightToAskOrg/righttoask-docs/gh-pages/RightToAsk.png" />
     <p style="font: normal small-caps 900 16px sans-serif; color: white">
@@ -10,7 +9,6 @@ title: overview
     </p>
     <div style="clear:both;"></div>
 </div>
-</a>
 
 ## Project Overview
 
