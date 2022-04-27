@@ -1,7 +1,8 @@
-Who Should Answer Page
-  - Named in the app as the FlowOptionPage
-  
-Elements:
+# FlowOptionPage
+  - You should be selecting who should answer your question on this page, and it determines which pages come up next in the main question drafting flow.
+  ![AnswerQuestionPage](https://user-images.githubusercontent.com/17503398/165642294-dd66af71-060f-4a32-a1ea-921dadfea61d.PNG)
+
+## Elements:
   - 2 large boxes stacked on top of each other to determine 1 of the 2 main ways to navigate through the main question drafting flow of the application.
     
     You either:
@@ -17,6 +18,9 @@ Elements:
       
   - The upper option's buttons navigate an MP ExploringPage to choose an MP to answer your question and then returns you to the ReadingPage
   - The lower box's button options navigates to either an MP ExploringPage or a Public Authority ExploringPage
-    and then returns the user to the QuestionAskerPage to determine who should raise your question before going to the reading page.
+    and then returns the user to the QuestionAskerPage to determine who should raise your question before going to the ReadingPage.
   
   - The page has a home button on the toolbar to bail out of the main flow of the question drafting process and return to the main page.
+
+## ViewModel:
+  - Makes use of the **QuestionViewModel.Instance** as part of the *"MainFlow"* for drafting questions
