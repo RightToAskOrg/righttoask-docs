@@ -22,3 +22,6 @@
   - Draft Question Entry that holds your existing question draft text (if applicable)
   - Button to discard draft
   - Button to Keep the question and proceed to the question details page to review before uploading.
+
+## ViewModel
+  - Has its own **ReadingPageViewModel** but grabs the question string if you are currently drafting a question from the global *DraftQuestion* variable stored on the       **App.ReadingContext**
