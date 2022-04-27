@@ -1,5 +1,4 @@
 # FlowOptionPage
-  - You should be selecting who should answer your question on this page, and it determines which pages come up next in the main question drafting flow.
   ![AnswerQuestionPage](https://user-images.githubusercontent.com/17503398/165642294-dd66af71-060f-4a32-a1ea-921dadfea61d.PNG)
 
 ## Elements:
@@ -11,10 +10,10 @@
     B. Make a question that you'd like to be raised in Parliament
     
     - Each box consits of:
-      1. A frame to hold the inner contents
-      2. A main heading label
-      3. A subtext label to describe and elaborate on the main heading label
-      4. Two separate buttons to pick for who should answer your question.
+      - A frame to hold the inner contents
+      - A main heading label
+      - A subtext label to describe and elaborate on the main heading label
+      - Two separate buttons to pick for who should answer your question.
       
   - The upper option's buttons navigate an MP ExploringPage to choose an MP to answer your question and then returns you to the ReadingPage
   - The lower box's button options navigates to either an MP ExploringPage or a Public Authority ExploringPage
