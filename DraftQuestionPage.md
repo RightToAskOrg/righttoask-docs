@@ -5,3 +5,6 @@
 - Has a home button on the toolbar to bail out of the main flow of the question drafting process and return to the main page.
 - Contains an editor field for the user to enter their question that they'd like to ask. Has a label above it to prompt the user. Limits the character count to 280.
 - Has a button to navigate to the next page, which should be the new FlowOptions page.
+
+## ViewModel:
+- Makes use of the **QuestionViewModel.Instance** as part of the "*Main Flow*" for drafting questions.
