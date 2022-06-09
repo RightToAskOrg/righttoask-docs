@@ -19,11 +19,16 @@ determines where we would like to place them back into the flow of the applicati
 so that it appears as seamless as possible.
 
 ## Example Publisher:
+
+```
 MessagingCenter.Send(this, "MessageToSend"); // "this" is the instance of the ViewModel that the message is being sent from
 // That line could also be written as the following
 MessagingCenter.Send<NameOfViewModel>(this, "MessageToSend"); // though shorthand generally forgoes the <NameOfViewModel> part
+```
 
 ## Example Subscriber:
+
+```
 MessagingCenter.Subscribe<NameOfViewModel>(this, "MessageToSend", (sender) =>
 {
   // Do something here
@@ -31,14 +36,23 @@ MessagingCenter.Subscribe<NameOfViewModel>(this, "MessageToSend", (sender) =>
   // unsubscribe if you don't want to continually hit this listener / only hit it one time i.e. when the ViewModel this page is attached to is created
   MessagingCenter.Unsubscribe<NameOfViewModel>(this, "MessageToSend");
 });
+```
+
 // here the name of the ViewModel in <> is supposed to be the ViewModel where you expect the message to be coming from.
 // The "MessageToSend" is the incoming message you are looking for from that particular ViewModel location
 
 ## Example with Args:
 // if you wish to pass an object with data along with the message, you may send it as an argument/parameter in the following manner
+
+```
 MessagingCenter.Send<NameOfViewModel, ObjectTypeToSend>(this, "MessageToSend", objectValueToSend);
-Ex: 
+```
+
+```
 MessagingCenter.Send<NameOfViewModel, bool>(this, "MessageToSend", true);
+```
+
+```
 MessagingCenter.Subscribe<NameOfViewModel, bool>(this, "MessageToSend", (sender, arg) =>
 {
   // Do something here
@@ -46,6 +60,7 @@ MessagingCenter.Subscribe<NameOfViewModel, bool>(this, "MessageToSend", (sender,
   // unsubscribe if you don't want to continually hit this listener / only hit it one time i.e. when the ViewModel this page is attached to is created
   MessagingCenter.Unsubscribe<NameOfViewModel>(this, "MessageToSend");
 });
+```
 
 ## Link To Microsoft Docs:
 https://docs.microsoft.com/en-us/xamarin/xamarin-forms/app-fundamentals/messaging-center
