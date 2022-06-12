@@ -8,15 +8,13 @@ be aware of any extra potential senders. The only thing that each component care
 One of the neat things about the MessagingCenter is that it allows us to pass data to previous pages as well. Microsoft's .Net MAUI will implement a way to do this
 but until upgrading to .Net MAUI from Xamarin.Forms the best way to pass data to previous pages in a form of "backwards navigation" is to utilize the MessagingCenter.
 
-Currently you can pass data through pages by passing objects into their constructors, but instead of chaining object from pageA to pageB to pageC to pageD because 
-pageD needed to know what was on pageA, and the only way to get to pageD from pageA was to go through B and C (but they don't need to use that data). 
-You can skip passing it to the pages that don't need it by having the listener be on pageD and the sender send it from pageA to skip the middle few steps.
-
 ## How we utilize it:
 We use MessagingCenter in the RightToAsk application as a way to indicate where we want to navigate to on future pages, based on which pages the user
 has previously come from. In the app there are many ways in which the user can start creating an account. Depending on where they came from previously
 determines where we would like to place them back into the flow of the application after finishing the account creation process
 so that it appears as seamless as possible.
+
+This requires the use of a ContineWith() method call because we need to complete the navigation to the next page so that the page is created. Most of our Subscribers are made in the constructors of a page's ViewModel. If we try to send the message before a subcriber is created, the message will not be received. Thus, the ContinueWith() method allows us to send the message after we create and push the new page onto the navigation stack.
 
 ## Example Publisher:
 
