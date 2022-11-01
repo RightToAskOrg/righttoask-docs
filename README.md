@@ -6,4 +6,4 @@ So far, we've had valuable contributions from [Andrew Conway](), [Ishan Goyal](h
 
 If you're new to open source, you might like to read [this guide to getting started](https://www.digitalocean.com/community/tutorial_series/an-introduction-to-open-source).
 
-![](Chuan_photo.jpg)
+![](Chuan_photo.jpg).
